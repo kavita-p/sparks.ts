@@ -10,7 +10,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "nodemon index.js"
+    "test": "nodemon index.js",
+    "deploy-commands": "node deploy-commands.js"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"
