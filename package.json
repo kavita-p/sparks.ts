@@ -1,4 +1,7 @@
 {
   "name": "sparks",
-  "packageManager": "yarn@3.2.2"
+  "packageManager": "yarn@3.2.2",
+  "dependencies": {
+    "discord.js": "^14.1.1"
+  }
 }
