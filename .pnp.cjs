@@ -33,6 +33,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@discordjs/rest", "npm:1.0.1"],\
             ["discord.js", "npm:14.1.1"],\
             ["nodemon", "npm:2.0.19"]\
           ],\
@@ -1364,6 +1365,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["sparks", "workspace:."],\
+            ["@discordjs/rest", "npm:1.0.1"],\
             ["discord.js", "npm:14.1.1"],\
             ["nodemon", "npm:2.0.19"]\
           ],\
