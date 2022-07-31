@@ -11,7 +11,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "nodemon index.js",
-    "deploy": "node deploy-commands.js",
+    "update": "node deploy-commands.js",
     "format": "prettier --write ."
   },
   "devDependencies": {
