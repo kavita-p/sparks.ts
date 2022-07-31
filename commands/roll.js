@@ -10,31 +10,31 @@ const data = new SlashCommandBuilder()
       .setRequired(true)
   );
 
-module.exports = {
-  data: data,
-  async execute(interaction) {
-    const dice = interaction.options.getString('dice');
-    let diceArray = dice.split('d');
-    diceArray.forEach(
-      (value, index) => (diceArray[index] = parseInt(value, 10))
-    );
-    let [count, sides] = diceArray;
-    if (
-      diceArray.length !== 2 ||
-      !Number.isInteger(count) ||
-      !Number.isInteger(sides)
-    ) {
-      await interaction.reply(`Sorry, that's not a valid command!`);
-    } else {
-      let results = [];
-      for (let i = 0; i < count; i++) {
-        results.push(Math.floor(sides * Math.random() + 1));
-      }
-      console.log(results);
-      let score = Math.max(...results);
-      await interaction.reply(
-        `You rolled ${score} on ${count}d${sides}! (${results.join(', ')})`
-      );
+const execute = async (interaction) => {
+  const dice = interaction.options.getString('dice');
+  let diceArray = dice.split('d');
+  diceArray.forEach((value, index) => (diceArray[index] = parseInt(value, 10)));
+  let [count, sides] = diceArray;
+  if (
+    diceArray.length !== 2 ||
+    !Number.isInteger(count) ||
+    !Number.isInteger(sides)
+  ) {
+    await interaction.reply(`Sorry, that's not a valid command!`);
+  } else {
+    let results = [];
+    for (let i = 0; i < count; i++) {
+      results.push(Math.floor(sides * Math.random() + 1));
     }
-  },
+    console.log(results);
+    let score = Math.max(...results);
+    await interaction.reply(
+      `You rolled ${score} on ${count}d${sides}! (${results.join(', ')})`
+    );
+  }
+};
+
+module.exports = {
+  data,
+  execute,
 };
