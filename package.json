@@ -14,7 +14,8 @@
     "deploy-commands": "node deploy-commands.js"
   },
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "prettier": "2.7.1"
   },
   "prettier": {
     "singleQuote": true

@@ -35,7 +35,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@discordjs/rest", "npm:1.0.1"],\
             ["discord.js", "npm:14.1.1"],\
-            ["nodemon", "npm:2.0.19"]\
+            ["nodemon", "npm:2.0.19"],\
+            ["prettier", "npm:2.7.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -1165,6 +1166,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["prettier", [\
+        ["npm:2.7.1", {\
+          "packageLocation": "./.yarn/cache/prettier-npm-2.7.1-d1f40f5e1a-55a4409182.zip/node_modules/prettier/",\
+          "packageDependencies": [\
+            ["prettier", "npm:2.7.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["promise-inflight", [\
         ["npm:1.0.1", {\
           "packageLocation": "./.yarn/cache/promise-inflight-npm-1.0.1-5bb925afac-2274948309.zip/node_modules/promise-inflight/",\
@@ -1367,7 +1377,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["sparks", "workspace:."],\
             ["@discordjs/rest", "npm:1.0.1"],\
             ["discord.js", "npm:14.1.1"],\
-            ["nodemon", "npm:2.0.19"]\
+            ["nodemon", "npm:2.0.19"],\
+            ["prettier", "npm:2.7.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
