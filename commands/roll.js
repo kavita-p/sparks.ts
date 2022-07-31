@@ -13,8 +13,11 @@ const data = new SlashCommandBuilder()
 module.exports = {
   data: data,
   async execute(interaction) {
-    const dice = interaction.options.getString('input');
+    const dice = interaction.options.getString('dice');
     let diceArray = dice.split('d');
+    diceArray.forEach(
+      (value, index) => (diceArray[index] = parseInt(value, 10))
+    );
     let [count, sides] = diceArray;
     if (
       diceArray.length !== 2 ||
@@ -22,14 +25,16 @@ module.exports = {
       !Number.isInteger(sides)
     ) {
       await interaction.reply(`Sorry, that's not a valid command!`);
+    } else {
+      let results = [];
+      for (let i = 0; i < count; i++) {
+        results.push(Math.floor(sides * Math.random() + 1));
+      }
+      console.log(results);
+      let score = Math.max(...results);
+      await interaction.reply(
+        `You rolled ${score} on ${count}d${sides}! (${results.join(', ')})`
+      );
     }
-    let results = [];
-    for (let i = 0; i < count; i++) {
-      results.push = Math.floor(sides * Math.random() + 1);
-    }
-    let score = Math.max(...results);
-    await interaction.reply(
-      `You rolled a ${score} on ${count}d${sides}! (${results.join(', ')})`
-    );
   },
 };
