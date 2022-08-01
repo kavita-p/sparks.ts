@@ -38,7 +38,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["eslint-config-prettier", "virtual:0cfc60e8da3625ad5d999c28e1bf668e4878a4d2d2b16dc29dda17fe2656fa7c4e2841f31cbad5f13dc4e0130b66cc5c7fbcb38f046aa0fed838f8db67728414#npm:8.5.0"],\
             ["nodemon", "npm:2.0.19"],\
-            ["prettier", "npm:2.7.1"]\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -1977,7 +1978,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.20.0"],\
             ["eslint-config-prettier", "virtual:0cfc60e8da3625ad5d999c28e1bf668e4878a4d2d2b16dc29dda17fe2656fa7c4e2841f31cbad5f13dc4e0130b66cc5c7fbcb38f046aa0fed838f8db67728414#npm:8.5.0"],\
             ["nodemon", "npm:2.0.19"],\
-            ["prettier", "npm:2.7.1"]\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -2150,6 +2152,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/type-fest-npm-0.20.2-b36432617f-4fb3272df2.zip/node_modules/type-fest/",\
           "packageDependencies": [\
             ["type-fest", "npm:0.20.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["typescript", [\
+        ["patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af", {\
+          "packageLocation": "./.yarn/cache/typescript-patch-fc259c5d56-9096d8f6c1.zip/node_modules/typescript/",\
+          "packageDependencies": [\
+            ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=f456af"]\
           ],\
           "linkType": "HARD"\
         }]\
