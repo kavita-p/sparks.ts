@@ -1,12 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
-import { botClient } from './utils/types';
+// import './utils/types.d.ts';
 import { token } from './config.json';
 
-const client: botClient = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client: Client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-client.commands = new Collection();
+const commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
   .readdirSync(commandsPath)
@@ -15,7 +15,7 @@ const commandFiles = fs
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
-  client.commands.set(command.data.name, command);
+  commands.set(command.data.name, command);
 }
 
 const eventsPath = path.join(__dirname, 'events');
@@ -29,7 +29,7 @@ for (const file of eventFiles) {
   if (event.once) {
     client.once(event.name, (...args) => event.execute(...args));
   } else {
-    client.on(event.name, (...args) => event.execute(...args));
+    client.on(event.name, (...args) => event.execute(commands, ...args));
   }
 }
 client.login(token);

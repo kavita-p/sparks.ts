@@ -1,12 +1,10 @@
 module.exports = {
   name: 'interactionCreate',
-  async execute(interaction) {
+  async execute(commands, interaction) {
     console.log(`${interaction.user.tag} triggered an interaction.`);
     if (!interaction.isChatInputCommand()) return;
 
-    const client = interaction.client;
-
-    const command = client.commands.get(interaction.commandName);
+    const command = commands.get(interaction.commandName);
 
     if (!command) return;
 
