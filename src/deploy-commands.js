@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { SlashCommandBuilder, Routes } = require('discord.js');
+const { Routes } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { clientId, token } = require('./config.json');
 
