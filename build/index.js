@@ -1,25 +1,31 @@
-var fs = require('node:fs');
-var path = require('node:path');
-var _a = require('discord.js'), Client = _a.Client, Collection = _a.Collection, GatewayIntentBits = _a.GatewayIntentBits;
-var token = require('./config.json').token;
-var client = new Client({ intents: [GatewayIntentBits.Guilds] });
-client.commands = new Collection();
-var commandsPath = path.join(__dirname, 'commands');
-var commandFiles = fs
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var fs_1 = __importDefault(require("fs"));
+var path_1 = __importDefault(require("path"));
+var discord_js_1 = require("discord.js");
+var config_json_1 = require("./config.json");
+var client = new discord_js_1.Client({ intents: [discord_js_1.GatewayIntentBits.Guilds] });
+client.commands = new discord_js_1.Collection();
+var commandsPath = path_1.default.join(__dirname, 'commands');
+var commandFiles = fs_1.default
     .readdirSync(commandsPath)
     .filter(function (file) { return file.endsWith('.js'); });
 for (var _i = 0, commandFiles_1 = commandFiles; _i < commandFiles_1.length; _i++) {
     var file = commandFiles_1[_i];
-    var filePath = path.join(commandsPath, file);
+    var filePath = path_1.default.join(commandsPath, file);
     var command = require(filePath);
+    console.log(command);
     client.commands.set(command.data.name, command);
 }
-var eventsPath = path.join(__dirname, 'events');
-var eventFiles = fs
+var eventsPath = path_1.default.join(__dirname, 'events');
+var eventFiles = fs_1.default
     .readdirSync(eventsPath)
     .filter(function (file) { return file.endsWith('.js'); });
 var _loop_1 = function (file) {
-    var filePath = path.join(eventsPath, file);
+    var filePath = path_1.default.join(eventsPath, file);
     var event_1 = require(filePath);
     if (event_1.once) {
         client.once(event_1.name, function () {
@@ -40,8 +46,8 @@ var _loop_1 = function (file) {
         });
     }
 };
-for (var _b = 0, eventFiles_1 = eventFiles; _b < eventFiles_1.length; _b++) {
-    var file = eventFiles_1[_b];
+for (var _a = 0, eventFiles_1 = eventFiles; _a < eventFiles_1.length; _a++) {
+    var file = eventFiles_1[_a];
     _loop_1(file);
 }
-client.login(token);
+client.login(config_json_1.token);
