@@ -1,26 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
+import { botClient } from './utils/types';
 import { token } from './config.json';
-
-interface commandData {
-  name: String;
-  description: String;
-  options: Array<any>;
-  default_permission: any;
-  default_member_permissions: any;
-  dm_permission: Boolean;
-}
-
-interface botCommand {
-  data: {
-    [key: string]: commandData;
-  };
-}
-
-interface botClient extends Client {
-  commands?: Collection<String, botCommand>;
-}
 
 const client: botClient = new Client({ intents: [GatewayIntentBits.Guilds] });
 
