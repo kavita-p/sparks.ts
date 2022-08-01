@@ -26,7 +26,6 @@ const execute = async (interaction) => {
     for (let i = 0; i < count; i++) {
       results.push(Math.floor(sides * Math.random() + 1));
     }
-    console.log(results);
     let score = Math.max(...results);
     await interaction.reply(
       `You rolled ${score} on ${count}d${sides}! (${results.join(', ')})`

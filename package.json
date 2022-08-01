@@ -9,9 +9,9 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "nodemon index.js",
-    "update": "node deploy-commands.js",
+    "start": "node src/index.js",
+    "test": "nodemon src/index.js",
+    "update": "node src/deploy-commands.js",
     "format": "prettier --write ."
   },
   "devDependencies": {
