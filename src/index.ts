@@ -1,9 +1,29 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const { token } = require('./config.json');
+import fs from 'fs';
+import path from 'path';
+import { Client, Collection, GatewayIntentBits } from 'discord.js';
+import { token } from './config.json';
+import { describe } from 'node:test';
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+interface commandData {
+  name: String;
+  description: String;
+  options: Array<any>;
+  default_permission: any;
+  default_member_permissions: any;
+  dm_permission: Boolean;
+}
+
+interface botCommand {
+  data: {
+    [key: string]: commandData;
+  };
+}
+
+interface botClient extends Client {
+  commands?: Collection<String, botCommand>;
+}
+
+const client: botClient = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
@@ -14,6 +34,7 @@ const commandFiles = fs
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
+  console.log(command);
   client.commands.set(command.data.name, command);
 }
 
