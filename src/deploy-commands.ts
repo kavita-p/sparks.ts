@@ -1,8 +1,8 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const { Routes } = require('discord.js');
-const { REST } = require('@discordjs/rest');
-const { clientId, token } = require('./config.json');
+import fs from 'fs';
+import path from 'path';
+import { Routes } from 'discord.js';
+import { REST } from '@discordjs/rest';
+import { clientId, token } from './config.json';
 
 const commands = [];
 const commandsPath = path.join(__dirname, 'commands');

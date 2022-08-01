@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
 import { token } from './config.json';
-import { describe } from 'node:test';
 
 interface commandData {
   name: String;
