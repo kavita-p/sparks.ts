@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,41 +35,39 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-module.exports = {
-    name: 'interactionCreate',
-    execute: function (interaction) {
-        return __awaiter(this, void 0, void 0, function () {
-            var client, command, error_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        console.log("".concat(interaction.user.tag, " triggered an interaction."));
-                        if (!interaction.isChatInputCommand())
-                            return [2 /*return*/];
-                        client = interaction.client;
-                        command = client.commands.get(interaction.commandName);
-                        if (!command)
-                            return [2 /*return*/];
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 5]);
-                        return [4 /*yield*/, command.execute(interaction)];
-                    case 2:
-                        _a.sent();
-                        return [3 /*break*/, 5];
-                    case 3:
-                        error_1 = _a.sent();
-                        console.error(error_1);
-                        return [4 /*yield*/, interaction.reply({
-                                content: 'There was an error while executing this command!',
-                                ephemeral: true,
-                            })];
-                    case 4:
-                        _a.sent();
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
-                }
-            });
-        });
-    },
-};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = exports.name = void 0;
+exports.name = 'interactionCreate';
+var execute = function (commands, interaction) { return __awaiter(void 0, void 0, void 0, function () {
+    var command, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log("".concat(interaction.user.tag, " triggered an interaction."));
+                if (!interaction.isChatInputCommand())
+                    return [2 /*return*/];
+                command = commands.get(interaction.commandName);
+                if (!command)
+                    return [2 /*return*/];
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 5]);
+                return [4 /*yield*/, command.execute(interaction)];
+            case 2:
+                _a.sent();
+                return [3 /*break*/, 5];
+            case 3:
+                error_1 = _a.sent();
+                console.error(error_1);
+                return [4 /*yield*/, interaction.reply({
+                        content: 'There was an error while executing this command!',
+                        ephemeral: true,
+                    })];
+            case 4:
+                _a.sent();
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
+        }
+    });
+}); };
+exports.execute = execute;
