@@ -1,6 +1,6 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { Interaction, SlashCommandBuilder } from 'discord.js';
 
-const data = new SlashCommandBuilder()
+export const data = new SlashCommandBuilder()
   .setName('roll')
   .setDescription('Rolls dice')
   .addStringOption((option) =>
@@ -10,10 +10,14 @@ const data = new SlashCommandBuilder()
       .setRequired(true)
   );
 
-const execute = async (interaction) => {
+export const execute = async (interaction: Interaction) => {
+  if (!interaction.isRepliable || !interaction.isChatInputCommand()) return;
+
   const dice = interaction.options.getString('dice');
-  let diceArray = dice.split('d');
-  diceArray.forEach((value, index) => (diceArray[index] = parseInt(value, 10)));
+  let diceArray: any[] = dice.split('d');
+  diceArray.forEach(
+    (value: string, index: number) => (diceArray[index] = parseInt(value, 10))
+  );
   let [count, sides] = diceArray;
   if (
     diceArray.length !== 2 ||
@@ -31,9 +35,4 @@ const execute = async (interaction) => {
       `You rolled ${score} on ${count}d${sides}! (${results.join(', ')})`
     );
   }
-};
-
-module.exports = {
-  data,
-  execute,
 };

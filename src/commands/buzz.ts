@@ -1,10 +1,10 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { SlashCommandBuilder, Interaction } from 'discord.js';
 
-module.exports = {
-  data: new SlashCommandBuilder()
-    .setName('buzz')
-    .setDescription('Replies with Zap!'),
-  async execute(interaction) {
-    await interaction.reply('Zap!');
-  },
+export const data = new SlashCommandBuilder()
+  .setName('buzz')
+  .setDescription('Replies with Zap!');
+
+export const execute = async (interaction: Interaction) => {
+  if (!interaction.isRepliable()) return;
+  await interaction.reply('Zap!');
 };
