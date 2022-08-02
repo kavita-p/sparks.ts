@@ -36,21 +36,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = exports.data = void 0;
 var discord_js_1 = require("discord.js");
-module.exports = {
-    data: new discord_js_1.SlashCommandBuilder()
-        .setName('buzz')
-        .setDescription('Replies with Zap!'),
-    execute: function (interaction) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, interaction.reply('Zap!')];
-                    case 1:
-                        _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    },
-};
+exports.data = new discord_js_1.SlashCommandBuilder()
+    .setName('buzz')
+    .setDescription('Replies with Zap!');
+var execute = function (interaction) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!interaction.isRepliable())
+                    return [2 /*return*/];
+                return [4 /*yield*/, interaction.reply('Zap!')];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.execute = execute;

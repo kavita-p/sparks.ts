@@ -36,8 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.execute = exports.data = void 0;
 var discord_js_1 = require("discord.js");
-var data = new discord_js_1.SlashCommandBuilder()
+exports.data = new discord_js_1.SlashCommandBuilder()
     .setName('roll')
     .setDescription('Rolls dice')
     .addStringOption(function (option) {
@@ -51,6 +52,8 @@ var execute = function (interaction) { return __awaiter(void 0, void 0, void 0, 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                if (!interaction.isRepliable || !interaction.isChatInputCommand())
+                    return [2 /*return*/];
                 dice = interaction.options.getString('dice');
                 diceArray = dice.split('d');
                 diceArray.forEach(function (value, index) { return (diceArray[index] = parseInt(value, 10)); });
@@ -76,7 +79,4 @@ var execute = function (interaction) { return __awaiter(void 0, void 0, void 0, 
         }
     });
 }); };
-module.exports = {
-    data: data,
-    execute: execute,
-};
+exports.execute = execute;

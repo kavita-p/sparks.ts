@@ -13,7 +13,7 @@
     "test": "nodemon src/index.ts",
     "update": "ts-node src/deploy-commands.ts",
     "format": "prettier --write .",
-    "built": "tsc"
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/node": "^18.6.3",

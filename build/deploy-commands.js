@@ -12,7 +12,7 @@ var commands = [];
 var commandsPath = path_1.default.join(__dirname, 'commands');
 var commandFiles = fs_1.default
     .readdirSync(commandsPath)
-    .filter(function (file) { return file.endsWith('.js'); });
+    .filter(function (file) { return file.endsWith('.ts'); });
 for (var _i = 0, commandFiles_1 = commandFiles; _i < commandFiles_1.length; _i++) {
     var file = commandFiles_1[_i];
     var filePath = path_1.default.join(commandsPath, file);
