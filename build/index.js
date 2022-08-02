@@ -17,12 +17,13 @@ var path_1 = __importDefault(require("path"));
 var discord_js_1 = require("discord.js");
 // import './utils/types.d.ts';
 var config_json_1 = require("./config.json");
+console.log('initializing bot');
 var client = new discord_js_1.Client({ intents: [discord_js_1.GatewayIntentBits.Guilds] });
 var commands = new discord_js_1.Collection();
 var commandsPath = path_1.default.join(__dirname, 'commands');
 var commandFiles = fs_1.default
     .readdirSync(commandsPath)
-    .filter(function (file) { return file.endsWith('.ts'); });
+    .filter(function (file) { return file.endsWith('.ts') || file.endsWith('.js'); });
 for (var _i = 0, commandFiles_1 = commandFiles; _i < commandFiles_1.length; _i++) {
     var file = commandFiles_1[_i];
     var filePath = path_1.default.join(commandsPath, file);
@@ -32,7 +33,7 @@ for (var _i = 0, commandFiles_1 = commandFiles; _i < commandFiles_1.length; _i++
 var eventsPath = path_1.default.join(__dirname, 'events');
 var eventFiles = fs_1.default
     .readdirSync(eventsPath)
-    .filter(function (file) { return file.endsWith('.ts'); });
+    .filter(function (file) { return file.endsWith('.ts') || file.endsWith('.js'); });
 var _loop_1 = function (file) {
     var filePath = path_1.default.join(eventsPath, file);
     var event_1 = require(filePath);

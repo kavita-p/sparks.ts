@@ -4,13 +4,15 @@ import { Client, Collection, GatewayIntentBits } from 'discord.js';
 // import './utils/types.d.ts';
 import { token } from './config.json';
 
+console.log('Waking up...');
+
 const client: Client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 const commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs
   .readdirSync(commandsPath)
-  .filter((file) => file.endsWith('.ts'));
+  .filter((file) => file.endsWith('.ts') || file.endsWith('.js'));
 
 for (const file of commandFiles) {
   const filePath = path.join(commandsPath, file);
@@ -21,7 +23,7 @@ for (const file of commandFiles) {
 const eventsPath = path.join(__dirname, 'events');
 const eventFiles = fs
   .readdirSync(eventsPath)
-  .filter((file) => file.endsWith('.ts'));
+  .filter((file) => file.endsWith('.ts') || file.endsWith('.js'));
 
 for (const file of eventFiles) {
   const filePath = path.join(eventsPath, file);

@@ -9,9 +9,9 @@
   },
   "main": "src/index.js",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "node build/index.js",
     "test": "nodemon src/index.ts",
-    "update": "ts-node src/deploy-commands.ts",
+    "update:commmands": "node build/deploy-commands.js",
     "format": "prettier --write .",
     "build": "tsc"
   },
