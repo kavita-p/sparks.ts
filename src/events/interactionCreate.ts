@@ -2,7 +2,7 @@ import { Collection, Interaction } from 'discord.js';
 
 export const name = 'interactionCreate';
 export const execute = async (
-  commands: Collection<any, any>,
+  commands: Collection<String, any>,
   interaction: Interaction
 ) => {
   console.log(`${interaction.user.tag} triggered an interaction.`);
