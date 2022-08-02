@@ -3,7 +3,7 @@ import path from 'path';
 import { Client, Collection, GatewayIntentBits } from 'discord.js';
 import { token } from './config.json';
 
-console.log('Waking up...');
+console.log('Morning! Waking up...');
 
 const client: Client = new Client({ intents: [GatewayIntentBits.Guilds] });
 

@@ -39,6 +39,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["discord.js", "npm:14.1.1"],\
             ["eslint", "npm:8.20.0"],\
             ["eslint-config-prettier", "virtual:0cfc60e8da3625ad5d999c28e1bf668e4878a4d2d2b16dc29dda17fe2656fa7c4e2841f31cbad5f13dc4e0130b66cc5c7fbcb38f046aa0fed838f8db67728414#npm:8.5.0"],\
+            ["husky", "npm:8.0.1"],\
             ["nodemon", "npm:2.0.19"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-node", "virtual:0cfc60e8da3625ad5d999c28e1bf668e4878a4d2d2b16dc29dda17fe2656fa7c4e2841f31cbad5f13dc4e0130b66cc5c7fbcb38f046aa0fed838f8db67728414#npm:10.9.1"],\
@@ -1316,6 +1317,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["husky", [\
+        ["npm:8.0.1", {\
+          "packageLocation": "./.yarn/cache/husky-npm-8.0.1-85fede8470-943a73a13d.zip/node_modules/husky/",\
+          "packageDependencies": [\
+            ["husky", "npm:8.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["iconv-lite", [\
         ["npm:0.6.3", {\
           "packageLocation": "./.yarn/cache/iconv-lite-npm-0.6.3-24b8aae27e-3f60d47a5c.zip/node_modules/iconv-lite/",\
@@ -2203,6 +2213,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["discord.js", "npm:14.1.1"],\
             ["eslint", "npm:8.20.0"],\
             ["eslint-config-prettier", "virtual:0cfc60e8da3625ad5d999c28e1bf668e4878a4d2d2b16dc29dda17fe2656fa7c4e2841f31cbad5f13dc4e0130b66cc5c7fbcb38f046aa0fed838f8db67728414#npm:8.5.0"],\
+            ["husky", "npm:8.0.1"],\
             ["nodemon", "npm:2.0.19"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-node", "virtual:0cfc60e8da3625ad5d999c28e1bf668e4878a4d2d2b16dc29dda17fe2656fa7c4e2841f31cbad5f13dc4e0130b66cc5c7fbcb38f046aa0fed838f8db67728414#npm:10.9.1"],\
