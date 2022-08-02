@@ -3,36 +3,46 @@ import { Interaction, SlashCommandBuilder } from 'discord.js';
 export const data = new SlashCommandBuilder()
   .setName('roll')
   .setDescription('Rolls dice')
-  .addStringOption((option) =>
-    option
-      .setName('dice')
-      .setDescription("The dice you'd like to roll")
-      .setRequired(true)
+  .addSubcommandGroup((subcommandGroup) =>
+    subcommandGroup
+      .setName('sbr')
+      .setDescription('Rolls for Sparked by Resistance games.')
+      .addSubcommand((subcommand) =>
+        subcommand
+          .setName('check')
+          .setDescription('Rolls d10s for a Sparked by Resistance skill check.')
+          .addIntegerOption((option) =>
+            option
+              .setName('pool')
+              .setDescription('The size of your dice pool.')
+              .setRequired(true)
+          )
+      )
+      .addSubcommand((subcommand) =>
+        subcommand
+          .setName('fallout')
+          .setDescription('Rolls a Sparked by resistance fallout test.')
+      )
+  )
+  .addSubcommand((subcommand) =>
+    subcommand
+      .setName('custom')
+      .setDescription('Rolls any number of any sides')
+      .addIntegerOption((option) =>
+        option
+          .setName('count')
+          .setDescription("The number of dice you'd like to roll.")
+          .setRequired(true)
+      )
+      .addIntegerOption((option) =>
+        option
+          .setName('sides')
+          .setDescription('The number of sides each die should have.')
+          .setRequired(true)
+      )
   );
 
 export const execute = async (interaction: Interaction) => {
   if (!interaction.isRepliable || !interaction.isChatInputCommand()) return;
-
-  const dice = interaction.options.getString('dice');
-  let diceArray: any[] = dice.split('d');
-  diceArray.forEach(
-    (value: string, index: number) => (diceArray[index] = parseInt(value, 10))
-  );
-  let [count, sides] = diceArray;
-  if (
-    diceArray.length !== 2 ||
-    !Number.isInteger(count) ||
-    !Number.isInteger(sides)
-  ) {
-    await interaction.reply(`Sorry, that's not a valid command!`);
-  } else {
-    let results = [];
-    for (let i = 0; i < count; i++) {
-      results.push(Math.floor(sides * Math.random() + 1));
-    }
-    let score = Math.max(...results);
-    await interaction.reply(
-      `You rolled ${score} on ${count}d${sides}! (${results.join(', ')})`
-    );
-  }
+  await interaction.reply(`Placeholder!`);
 };
