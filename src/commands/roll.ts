@@ -1,4 +1,5 @@
 import { Interaction, SlashCommandBuilder } from 'discord.js';
+import rollDice from '../utils/rollDice';
 
 export const data = new SlashCommandBuilder()
   .setName('roll')
@@ -44,5 +45,19 @@ export const data = new SlashCommandBuilder()
 
 export const execute = async (interaction: Interaction) => {
   if (!interaction.isRepliable || !interaction.isChatInputCommand()) return;
-  await interaction.reply(`Placeholder!`);
+  let rollType =
+    interaction.options.getSubcommandGroup() ||
+    interaction.options.getSubcommand();
+  let response = '';
+  switch (rollType) {
+    case 'custom':
+      let count = interaction.options.getInteger('count');
+      let sides = interaction.options.getInteger('sides');
+      let dice = rollDice(count, sides);
+      response += `Rolled **${dice.rolls.join(
+        ', '
+      )}** on ${count}d${sides} (max: ${dice.max}, min: ${dice.min}.)`;
+  }
+  if (response.length === 0) response = 'Placeholder!';
+  await interaction.reply(response);
 };

@@ -1,7 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = exports.data = void 0;
 const discord_js_1 = require("discord.js");
+const rollDice_1 = __importDefault(require("../utils/rollDice"));
 exports.data = new discord_js_1.SlashCommandBuilder()
     .setName('roll')
     .setDescription('Rolls dice')
@@ -32,6 +36,18 @@ exports.data = new discord_js_1.SlashCommandBuilder()
 const execute = async (interaction) => {
     if (!interaction.isRepliable || !interaction.isChatInputCommand())
         return;
-    await interaction.reply(`Placeholder!`);
+    let rollType = interaction.options.getSubcommandGroup() ||
+        interaction.options.getSubcommand();
+    let response = '';
+    switch (rollType) {
+        case 'custom':
+            let count = interaction.options.getInteger('count');
+            let sides = interaction.options.getInteger('sides');
+            let dice = (0, rollDice_1.default)(count, sides);
+            response += `Rolled **${dice.rolls.join(', ')}** on ${count}d${sides} (max: ${dice.max}, min: ${dice.min}.)`;
+    }
+    if (response.length === 0)
+        response = 'Placeholder!';
+    await interaction.reply(response);
 };
 exports.execute = execute;

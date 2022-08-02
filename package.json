@@ -10,7 +10,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node build/index.js",
-    "test": "concurrently \"tsc -w\" \"nodemon build/index.js\"",
+    "dev": "concurrently \"tsc -w\" \"nodemon build/index.js\"",
+    "debug": "nodemon src/index.ts",
     "deploy:commmands": "node build/deploy-commands.js",
     "format": "prettier --write .",
     "prepare": "husky install",
