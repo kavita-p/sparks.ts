@@ -6,6 +6,7 @@ const rollDice = (count, sides) => {
         results.rolls.push(Math.floor(sides * Math.random() + 1));
     }
     results.max = Math.max(...results.rolls);
+    results.min = Math.min(...results.rolls);
     return results;
 };
 exports.default = rollDice;

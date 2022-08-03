@@ -4,6 +4,7 @@ const rollDice = (count: number, sides: number) => {
     results.rolls.push(Math.floor(sides * Math.random() + 1));
   }
   results.max = Math.max(...results.rolls);
+  results.min = Math.min(...results.rolls);
   return results;
 };
 
