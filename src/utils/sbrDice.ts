@@ -23,7 +23,7 @@ export const skillCheck = (pool: number) => {
       response.status = 'fail';
     case 1:
       response.text += `Critical failure!`;
-      response.status = 'crit fail';
+      response.status = 'critfail';
   }
   response.text += `Rolled ${dice.max} on ${dice.rolls.join(', ')}.`;
   return response;
@@ -31,8 +31,10 @@ export const skillCheck = (pool: number) => {
 
 export const falloutTest = () => {
   let die = rollDice(1, 12);
-  let response = { text: '' };
-  response.text = `Test against ${die.max}! Take ${
+  let response = { text: '', status: '' };
+  response.text = `Test against **${die.max}**! Take ${
     die.max > 6 ? 'major' : 'minor'
-  } fallout if this roll is HIGHER than your total stress.`;
+  } fallout if this roll is **lower** than your total stress.`;
+  response.status = die.max > 6 ? 'mixed' : 'fail';
+  return response;
 };

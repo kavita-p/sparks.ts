@@ -1,5 +1,6 @@
 import { Interaction, SlashCommandBuilder } from 'discord.js';
 import rollDice from '../utils/rollDice';
+import { skillCheck, falloutTest } from '../utils/sbrDice';
 
 export const data = new SlashCommandBuilder()
   .setName('roll')
@@ -48,16 +49,21 @@ export const execute = async (interaction: Interaction) => {
   let rollType =
     interaction.options.getSubcommandGroup() ||
     interaction.options.getSubcommand();
-  let response = '';
+  let response = { text: '', status: '' };
   switch (rollType) {
     case 'custom':
       let count = interaction.options.getInteger('count');
       let sides = interaction.options.getInteger('sides');
       let dice = rollDice(count, sides);
-      response += `Rolled **${dice.rolls.join(
+      response.text += `Rolled **${dice.rolls.join(
         ', '
       )}** on ${count}d${sides} (max: ${dice.max}, min: ${dice.min}.)`;
+      if (dice.max === sides) response.status = 'full';
+    case 'sbr':
+      if (interaction.options.getSubcommand() === 'fallout') {
+        response = falloutTest();
+      }
   }
-  if (response.length === 0) response = 'Placeholder!';
-  await interaction.reply(response);
+  if (response.text.length === 0) response.text = 'Placeholder!';
+  await interaction.reply(response.text);
 };

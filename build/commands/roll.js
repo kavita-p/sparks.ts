@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = exports.data = void 0;
 const discord_js_1 = require("discord.js");
 const rollDice_1 = __importDefault(require("../utils/rollDice"));
+const sbrDice_1 = require("../utils/sbrDice");
 exports.data = new discord_js_1.SlashCommandBuilder()
     .setName('roll')
     .setDescription('Rolls dice')
@@ -38,16 +39,22 @@ const execute = async (interaction) => {
         return;
     let rollType = interaction.options.getSubcommandGroup() ||
         interaction.options.getSubcommand();
-    let response = '';
+    let response = { text: '', status: '' };
     switch (rollType) {
         case 'custom':
             let count = interaction.options.getInteger('count');
             let sides = interaction.options.getInteger('sides');
             let dice = (0, rollDice_1.default)(count, sides);
-            response += `Rolled **${dice.rolls.join(', ')}** on ${count}d${sides} (max: ${dice.max}, min: ${dice.min}.)`;
+            response.text += `Rolled **${dice.rolls.join(', ')}** on ${count}d${sides} (max: ${dice.max}, min: ${dice.min}.)`;
+            if (dice.max === sides)
+                response.status = 'full';
+        case 'sbr':
+            if (interaction.options.getSubcommand() === 'fallout') {
+                response = (0, sbrDice_1.falloutTest)();
+            }
     }
-    if (response.length === 0)
-        response = 'Placeholder!';
-    await interaction.reply(response);
+    if (response.text.length === 0)
+        response.text = 'Placeholder!';
+    await interaction.reply(response.text);
 };
 exports.execute = execute;
