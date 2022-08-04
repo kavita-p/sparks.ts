@@ -62,6 +62,8 @@ export const execute = async (interaction: Interaction) => {
     case 'sbr':
       if (interaction.options.getSubcommand() === 'fallout') {
         response = falloutTest();
+      } else if (interaction.options.getSubcommand() === 'check') {
+        response = skillCheck(interaction.options.getInteger('pool'));
       }
   }
   if (response.text.length === 0) response.text = 'Placeholder!';
