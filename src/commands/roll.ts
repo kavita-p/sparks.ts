@@ -1,4 +1,5 @@
 import { Interaction, SlashCommandBuilder } from 'discord.js';
+import { getSystemErrorName } from 'util';
 import rollDice from '../utils/rollDice';
 import { skillCheck, falloutTest } from '../utils/sbrDice';
 
@@ -24,6 +25,28 @@ export const data = new SlashCommandBuilder()
         subcommand
           .setName('fallout')
           .setDescription('Rolls a Sparked by resistance fallout test.')
+      )
+  )
+  .addSubcommandGroup((subcommandGroup) =>
+    subcommandGroup
+      .setName('forged')
+      .setDescription('Rolls for Forged in the Dark games.')
+      .addSubcommand((subcommand) =>
+        subcommand
+          .setName('check')
+          .setDescription('Rolls d6s for a Forged in the Dark action roll.')
+          .addIntegerOption((option) =>
+            option
+              .setName('pool')
+              .setDescription('The size of your dice pool.')
+              .setRequired(true)
+          )
+      )
+      .addSubcommand((subcommand) =>
+        subcommand
+          .setName('resist')
+          .setDescription('Rolls d6s for a Forged in the Dark resistance roll.')
+          .addIntegerOption((option) => option.setName('pool'))
       )
   )
   .addSubcommand((subcommand) =>
