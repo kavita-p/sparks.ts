@@ -42,17 +42,13 @@ const execute = async (interaction) => {
             break;
         case 'forged':
             let pool = interaction.options.getInteger('pool');
-            switch (interaction.options.getString('type')) {
-                case 'action':
-                    response = (0, forgedDice_1.actionRoll)(pool);
-                    break;
-                case 'resist':
-                    response = (0, forgedDice_1.resistanceRoll)(pool);
-                    break;
-                case 'fortune':
-                    response = (0, forgedDice_1.fortuneRoll)(pool);
-                case 'clearstress':
-            }
+            let rollFunctions = {
+                action: forgedDice_1.actionRoll,
+                resist: forgedDice_1.resistanceRoll,
+                fortune: forgedDice_1.fortuneRoll,
+            };
+            let rollType = interaction.options.getString('type');
+            response = rollFunctions[rollType](pool);
             break;
     }
     if (response.text.length === 0)

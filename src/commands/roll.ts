@@ -38,17 +38,13 @@ export const execute = async (interaction: Interaction) => {
       break;
     case 'forged':
       let pool = interaction.options.getInteger('pool');
-      switch (interaction.options.getString('type')) {
-        case 'action':
-          response = actionRoll(pool);
-          break;
-        case 'resist':
-          response = resistanceRoll(pool);
-          break;
-        case 'fortune':
-          response = fortuneRoll(pool);
-        case 'clearstress':
-      }
+      let rollFunctions = {
+        action: actionRoll,
+        resist: resistanceRoll,
+        fortune: fortuneRoll,
+      };
+      let rollType = interaction.options.getString('type');
+      response = rollFunctions[rollType](pool);
       break;
   }
   if (response.text.length === 0) response.text = 'Placeholder!';
