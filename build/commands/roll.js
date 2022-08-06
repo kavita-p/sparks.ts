@@ -80,6 +80,7 @@ const execute = async (interaction) => {
                     response = (0, forgedDice_1.resistanceRoll)(pool);
                     break;
                 case 'fortune':
+                    response = (0, forgedDice_1.fortuneRoll)(pool);
                 case 'clearstress':
             }
             break;

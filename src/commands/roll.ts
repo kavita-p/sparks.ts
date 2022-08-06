@@ -1,7 +1,7 @@
 import { Interaction, SlashCommandBuilder } from 'discord.js';
 import rollDice from '../utils/rollDice';
 import { skillCheck, falloutTest } from '../utils/sbrDice';
-import { actionRoll, resistanceRoll } from '../utils/forgedDice';
+import { actionRoll, fortuneRoll, resistanceRoll } from '../utils/forgedDice';
 
 export const data = new SlashCommandBuilder()
   .setName('roll')
@@ -101,6 +101,7 @@ export const execute = async (interaction: Interaction) => {
           response = resistanceRoll(pool);
           break;
         case 'fortune':
+          response = fortuneRoll(pool);
         case 'clearstress':
       }
       break;
