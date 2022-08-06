@@ -8,45 +8,15 @@ const discord_js_1 = require("discord.js");
 const rollDice_1 = __importDefault(require("../utils/rollDice"));
 const sbrDice_1 = require("../utils/sbrDice");
 const forgedDice_1 = require("../utils/forgedDice");
+const customRollCommand_1 = __importDefault(require("./rollCommands/customRollCommand"));
+const sbrRollCommand_1 = __importDefault(require("./rollCommands/sbrRollCommand"));
+const forgedRollCommand_1 = __importDefault(require("./rollCommands/forgedRollCommand"));
 exports.data = new discord_js_1.SlashCommandBuilder()
     .setName('roll')
     .setDescription('Rolls dice')
-    .addSubcommandGroup((subcommandGroup) => subcommandGroup
-    .setName('sbr')
-    .setDescription('Rolls for Sparked by Resistance games.')
-    .addSubcommand((subcommand) => subcommand
-    .setName('check')
-    .setDescription('Rolls d10s for a Sparked by Resistance skill check.')
-    .addIntegerOption((option) => option
-    .setName('pool')
-    .setDescription('The size of your dice pool.')
-    .setRequired(true)))
-    .addSubcommand((subcommand) => subcommand
-    .setName('fallout')
-    .setDescription('Rolls a Sparked by resistance fallout test.')))
-    .addSubcommand((subcommand) => subcommand
-    .setName('forged')
-    .setDescription('Rolls a Forged in the Dark roll.')
-    .addIntegerOption((option) => option
-    .setName('pool')
-    .setDescription('The size of your dice pool.')
-    .setRequired(true))
-    .addStringOption((option) => option
-    .setName('type')
-    .setDescription("The type of roll you'd like to make.")
-    .setRequired(true)
-    .addChoices({ name: 'action', value: 'action' }, { name: 'resistance', value: 'resist' }, { name: 'fortune/downtime', value: 'fortune' }, { name: 'clear stress', value: 'clearstress' })))
-    .addSubcommand((subcommand) => subcommand
-    .setName('custom')
-    .setDescription('Rolls any number of any sides')
-    .addIntegerOption((option) => option
-    .setName('count')
-    .setDescription("The number of dice you'd like to roll.")
-    .setRequired(true))
-    .addIntegerOption((option) => option
-    .setName('sides')
-    .setDescription('The number of sides each die should have.')
-    .setRequired(true)));
+    .addSubcommandGroup(sbrRollCommand_1.default)
+    .addSubcommand(forgedRollCommand_1.default)
+    .addSubcommand(customRollCommand_1.default);
 const execute = async (interaction) => {
     if (!interaction.isRepliable || !interaction.isChatInputCommand())
         return;
