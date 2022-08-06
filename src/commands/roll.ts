@@ -1,4 +1,4 @@
-import { Interaction, SlashCommandBuilder } from 'discord.js';
+import { Interaction, SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import rollDice from '../utils/rollDice';
 import { skillCheck, falloutTest } from '../utils/sbrDice';
 import { actionRoll, fortuneRoll, resistanceRoll } from '../utils/forgedDice';
@@ -107,5 +107,9 @@ export const execute = async (interaction: Interaction) => {
       break;
   }
   if (response.text.length === 0) response.text = 'Placeholder!';
-  await interaction.reply(response.text);
+  let embed = new EmbedBuilder()
+    .setTitle(response.status)
+    .setAuthor({ name: 'Sparks!' })
+    .setDescription(response.text);
+  await interaction.reply({ embeds: [embed] });
 };

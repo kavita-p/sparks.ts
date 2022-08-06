@@ -87,6 +87,10 @@ const execute = async (interaction) => {
     }
     if (response.text.length === 0)
         response.text = 'Placeholder!';
-    await interaction.reply(response.text);
+    let embed = new discord_js_1.EmbedBuilder()
+        .setTitle(response.status)
+        .setAuthor({ name: 'Sparks!' })
+        .setDescription(response.text);
+    await interaction.reply({ embeds: [embed] });
 };
 exports.execute = execute;
