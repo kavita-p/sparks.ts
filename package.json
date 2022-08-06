@@ -12,7 +12,7 @@
     "start": "node build/index.js",
     "dev": "concurrently \"tsc -w\" \"nodemon build/index.js\"",
     "debug": "nodemon src/index.ts",
-    "deploy:commmands": "node build/deploy-commands.js",
+    "deploy:commands": "node build/deploy-commands.js",
     "format": "prettier --write .",
     "prepare": "husky install",
     "build": "tsc"

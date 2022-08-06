@@ -1,7 +1,7 @@
 import { Interaction, SlashCommandBuilder } from 'discord.js';
-import { getSystemErrorName } from 'util';
 import rollDice from '../utils/rollDice';
 import { skillCheck, falloutTest } from '../utils/sbrDice';
+import { actionRoll, resistanceRoll } from '../utils/forgedDice';
 
 export const data = new SlashCommandBuilder()
   .setName('roll')
@@ -27,26 +27,27 @@ export const data = new SlashCommandBuilder()
           .setDescription('Rolls a Sparked by resistance fallout test.')
       )
   )
-  .addSubcommandGroup((subcommandGroup) =>
-    subcommandGroup
+  .addSubcommand((subcommand) =>
+    subcommand
       .setName('forged')
-      .setDescription('Rolls for Forged in the Dark games.')
-      .addSubcommand((subcommand) =>
-        subcommand
-          .setName('check')
-          .setDescription('Rolls d6s for a Forged in the Dark action roll.')
-          .addIntegerOption((option) =>
-            option
-              .setName('pool')
-              .setDescription('The size of your dice pool.')
-              .setRequired(true)
-          )
+      .setDescription('Rolls a Forged in the Dark roll.')
+      .addIntegerOption((option) =>
+        option
+          .setName('pool')
+          .setDescription('The size of your dice pool.')
+          .setRequired(true)
       )
-      .addSubcommand((subcommand) =>
-        subcommand
-          .setName('resist')
-          .setDescription('Rolls d6s for a Forged in the Dark resistance roll.')
-          .addIntegerOption((option) => option.setName('pool'))
+      .addStringOption((option) =>
+        option
+          .setName('type')
+          .setDescription("The type of roll you'd like to make.")
+          .setRequired(true)
+          .addChoices(
+            { name: 'action', value: 'action' },
+            { name: 'resistance', value: 'resist' },
+            { name: 'fortune/downtime', value: 'fortune' },
+            { name: 'clear stress', value: 'clearstress' }
+          )
       )
   )
   .addSubcommand((subcommand) =>
@@ -82,12 +83,27 @@ export const execute = async (interaction: Interaction) => {
         ', '
       )}** on ${count}d${sides} (max: ${dice.max}, min: ${dice.min}.)`;
       if (dice.max === sides) response.status = 'full';
+      break;
     case 'sbr':
       if (interaction.options.getSubcommand() === 'fallout') {
         response = falloutTest();
       } else if (interaction.options.getSubcommand() === 'check') {
         response = skillCheck(interaction.options.getInteger('pool'));
       }
+      break;
+    case 'forged':
+      let pool = interaction.options.getInteger('pool');
+      switch (interaction.options.getString('type')) {
+        case 'action':
+          response = actionRoll(pool);
+          break;
+        case 'resist':
+          response = resistanceRoll(pool);
+          break;
+        case 'fortune':
+        case 'clearstress':
+      }
+      break;
   }
   if (response.text.length === 0) response.text = 'Placeholder!';
   await interaction.reply(response.text);
