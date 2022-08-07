@@ -68,13 +68,15 @@ exports.skillCheck = skillCheck;
 const falloutTest = () => {
     let die = (0, rollDice_1.default)(1, 12);
     let response = {
-        title: 'Fallout test',
+        title: '',
         description: '',
         dice: '',
         status: '',
     };
-    response.description = `Test against **${die.max}**! Take ${die.max > 6 ? 'major' : 'minor'} fallout if this roll is **lower** than your total stress.`;
-    response.status = die.max > 6 ? 'mixed' : 'fail';
+    response.title += `Rolled ${die.max.toString()} to test for fallout.`;
+    response.description = `Take **${die.max > 6 ? 'major' : 'minor'}** fallout if this roll is **lower** than your total stress.`;
+    response.status = die.max > 6 ? 'fail' : 'mixed';
+    response.dice = die.max.toString();
     return response;
 };
 exports.falloutTest = falloutTest;

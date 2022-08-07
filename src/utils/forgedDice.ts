@@ -82,7 +82,6 @@ export const resistanceRoll = (pool: number) => {
     response.title = 'Clear 1 stress!';
     response.description += `Rolled a **critical** to resist. (Got **${sixes}** sixes.)`;
     response.status += 'crit';
-    response.dice = dice.rolls.join(', ');
   } else {
     response.title += `Take **${6 - dice.max}** stress to resist.`;
     response.description += `(6 minus your maximum of **${dice.max}**.)`;
@@ -94,5 +93,6 @@ export const resistanceRoll = (pool: number) => {
         ? 'mixed'
         : 'fail';
   }
+  response.dice = dice.rolls.join(', ');
   return response;
 };
