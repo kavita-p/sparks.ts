@@ -11,85 +11,88 @@ const checkCrit = (rolls: number[]) => {
 export const actionRoll = (pool: number) => {
   let dice = rollDice(pool, 6);
   let { isCrit, sixes } = checkCrit(dice.rolls);
-  let response = { text: '', status: '' };
+  let response = { title: '', description: '', dice: '', status: '' };
   if (isCrit) {
-    response.text = `Critical success! Got **${sixes} sixes** on ${pool}d (${dice.rolls.join(
-      ', '
-    )}). Your action has **increased effect.**`;
+    response.title = 'Critical success!';
+    response.description = `Got **${sixes} sixes** on ${pool}d. Your action has **increased effect.**`;
     response.status = 'crit';
   } else {
     switch (dice.max) {
       case 6:
-        response.text = `Full success`;
+        response.title = `Full success`;
         response.status = 'full';
         break;
       case 5:
       case 4:
-        response.text = `Mixed success`;
+        response.title = `Mixed success`;
         response.status = 'mixed';
         break;
       case 3:
       case 2:
       case 1:
-        response.text = `Failure`;
+        response.title = `Failure`;
         response.status = 'fail';
     }
-    response.text += `! Got **${dice.max}** on ${pool}d (${dice.rolls.join(
-      ', '
-    )}).`;
+    response.title += '!';
+    response.description += `Got **${dice.max}** on ${pool}d.`;
   }
+  response.dice = dice.rolls.join(', ');
   return response;
 };
 
 export const fortuneRoll = (pool: number) => {
   let dice = rollDice(pool, 6);
   let { isCrit, sixes } = checkCrit(dice.rolls);
-  let response = { text: '', status: '' };
+  let response = { title: '', description: '', dice: '', status: '' };
   if (isCrit) {
-    response.text = `Crit! Extreme effect, or 5 ticks on the relevant clock. Got **${sixes} sixes** on ${pool}d (${dice.rolls.join(
-      ', '
-    )}).`;
+    response.title = 'Critical!';
+    response.description = `Extreme effect, or 5 ticks on the relevant clock. Got **${sixes} sixes** on ${pool}d.`;
     response.status = 'crit';
   } else {
     switch (dice.max) {
       case 6:
-        response.text = `Full effect! **3 ticks** on the relevant clock.`;
+        response.title = 'Full effect!';
+        response.description = `**3 ticks** on the relevant clock.`;
         response.status = 'full';
         break;
       case 5:
       case 4:
-        response.text = `Standard effect. **2 ticks** on the relevant clock.`;
+        response.title = 'Standard effect.';
+        response.description = `**2 ticks** on the relevant clock.`;
         response.status = 'mixed';
         break;
       case 3:
       case 2:
       case 1:
-        response.text = `Reduced effect. **1 tick** on the relevant clock.`;
+        response.title = 'Reduced effect.';
+        response.description = `**1 tick** on the relevant clock.`;
         response.status = 'fail';
     }
-    response.text += ` Got **${dice.max}** on ${pool}d (${dice.rolls.join(
-      ', '
-    )}).`;
+    response.description += ` Got **${dice.max}** on ${pool}d.`;
   }
+  response.dice = dice.rolls.join(', ');
   return response;
 };
 
 export const resistanceRoll = (pool: number) => {
   let dice = rollDice(pool, 6);
-  let response = { text: '', status: '' };
+  let response = { title: '', description: '', dice: '', status: '' };
   let { isCrit, sixes } = checkCrit(dice.rolls);
   if (isCrit) {
-    response.text += `Critical success! **Clear 1 stress.** (Got **${sixes}** sixes on the following rolls: ${dice.rolls.join(
-      ', '
-    )}).`;
+    response.title = 'Clear 1 stress!';
+    response.description += `Rolled a **critical** to resist. (Got **${sixes}** sixes.)`;
     response.status += 'crit';
+    response.dice = dice.rolls.join(', ');
   } else {
-    response.text += `Take **${
-      6 - dice.max
-    }** stress to resist (6 minus your maximum of **${
-      dice.max
-    }** on the following rolls: ${dice.rolls.join(', ')}).`;
-    response.status = dice.max === 6 ? 'full' : 'mixed';
+    response.title += `Take **${6 - dice.max}** stress to resist.`;
+    response.description += `(6 minus your maximum of **${dice.max}**.)`;
+    response.dice = dice.rolls.join(', ');
+    response.status =
+      dice.max === 6
+        ? 'full'
+        : dice.max === 5 || dice.max == 4
+        ? 'mixed'
+        : 'fail';
   }
   return response;
 };

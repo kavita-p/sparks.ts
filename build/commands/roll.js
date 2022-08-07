@@ -22,13 +22,15 @@ const execute = async (interaction) => {
         return;
     let rollType = interaction.options.getSubcommandGroup() ||
         interaction.options.getSubcommand();
-    let response = { text: '', status: '' };
+    let response = { title: '', description: '', dice: '', status: '' };
     switch (rollType) {
         case 'custom':
             let count = interaction.options.getInteger('count');
             let sides = interaction.options.getInteger('sides');
             let dice = (0, rollDice_1.default)(count, sides);
-            response.text += `Rolled **${dice.rolls.join(', ')}** on ${count}d${sides} (max: ${dice.max}, min: ${dice.min}.)`;
+            response.title = dice.max.toString();
+            response.description += `Rolled ${count}d${sides} (max: ${dice.max}, min: ${dice.min}).`;
+            response.dice = dice.rolls.join(', ');
             if (dice.max === sides)
                 response.status = 'full';
             break;
@@ -51,12 +53,20 @@ const execute = async (interaction) => {
             response = rollFunctions[rollType](pool);
             break;
     }
-    if (response.text.length === 0)
-        response.text = 'Placeholder!';
+    if (response.description.length === 0)
+        response.description = 'Placeholder!';
+    let colors = {
+        critfail: 'DarkRed',
+        fail: 'Red',
+        mixed: 'Gold',
+        full: 'Green',
+        crit: 'Aqua',
+    };
     let embed = new discord_js_1.EmbedBuilder()
-        .setTitle(response.status)
-        .setAuthor({ name: 'Sparks!' })
-        .setDescription(response.text);
+        .setTitle(response.title)
+        .setDescription(response.description)
+        .addFields({ name: 'Rolls', value: response.dice })
+        .setColor(colors[response.status]);
     await interaction.reply({ embeds: [embed] });
 };
 exports.execute = execute;
