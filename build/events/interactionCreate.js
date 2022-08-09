@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = exports.name = void 0;
-exports.name = 'interactionCreate';
+exports.name = "interactionCreate";
 const execute = async (commands, interaction) => {
     console.log(`${interaction.user.tag} triggered an interaction.`);
     if (!interaction.isChatInputCommand())
@@ -15,7 +15,7 @@ const execute = async (commands, interaction) => {
     catch (error) {
         console.error(error);
         await interaction.reply({
-            content: 'There was an error while executing this command!',
+            content: "There was an error while executing this command!",
             ephemeral: true,
         });
     }

@@ -1,6 +1,6 @@
-import { Collection, Interaction } from 'discord.js';
+import { Collection, Interaction } from "discord.js";
 
-export const name = 'interactionCreate';
+export const name = "interactionCreate";
 export const execute = async (
   commands: Collection<String, any>,
   interaction: Interaction
@@ -17,7 +17,7 @@ export const execute = async (
   } catch (error) {
     console.error(error);
     await interaction.reply({
-      content: 'There was an error while executing this command!',
+      content: "There was an error while executing this command!",
       ephemeral: true,
     });
   }

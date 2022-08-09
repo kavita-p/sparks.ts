@@ -1,19 +1,19 @@
-import { SlashCommandSubcommandBuilder } from 'discord.js';
+import { SlashCommandSubcommandBuilder } from "discord.js";
 
 const customRollCommand = (subcommand: SlashCommandSubcommandBuilder) =>
   subcommand
-    .setName('custom')
-    .setDescription('Rolls any number of any sides')
+    .setName("custom")
+    .setDescription("Rolls any number of any sides")
     .addIntegerOption((option) =>
       option
-        .setName('count')
+        .setName("count")
         .setDescription("The number of dice you'd like to roll.")
         .setRequired(true)
     )
     .addIntegerOption((option) =>
       option
-        .setName('sides')
-        .setDescription('The number of sides each die should have.')
+        .setName("sides")
+        .setDescription("The number of sides each die should have.")
         .setRequired(true)
     );
 
