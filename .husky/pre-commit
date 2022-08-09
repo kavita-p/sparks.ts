@@ -3,4 +3,3 @@
 
 yarn prettier --write .
 yarn tsc
-git add .
