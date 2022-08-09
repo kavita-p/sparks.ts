@@ -19,18 +19,18 @@ export const actionRoll = (pool: number) => {
   } else {
     switch (dice.max) {
       case 6:
-        response.title = `Full success`;
+        response.title = "Full success";
         response.status = "full";
         break;
       case 5:
       case 4:
-        response.title = `Mixed success`;
+        response.title = "Mixed success";
         response.status = "mixed";
         break;
       case 3:
       case 2:
       case 1:
-        response.title = `Failure`;
+        response.title = "Failure";
         response.status = "fail";
     }
     response.title += "!";
@@ -52,20 +52,20 @@ export const fortuneRoll = (pool: number) => {
     switch (dice.max) {
       case 6:
         response.title = "Full effect!";
-        response.description = `**3 ticks** on the relevant clock.`;
+        response.description = "**3 ticks** on the relevant clock.";
         response.status = "full";
         break;
       case 5:
       case 4:
         response.title = "Standard effect.";
-        response.description = `**2 ticks** on the relevant clock.`;
+        response.description = "**2 ticks** on the relevant clock.";
         response.status = "mixed";
         break;
       case 3:
       case 2:
       case 1:
         response.title = "Reduced effect.";
-        response.description = `**1 tick** on the relevant clock.`;
+        response.description = "**1 tick** on the relevant clock.";
         response.status = "fail";
     }
     response.description += ` Got **${dice.max}** on ${pool}d.`;
