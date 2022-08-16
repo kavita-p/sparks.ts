@@ -19,7 +19,7 @@ const forgedRollCommand = (subcommand: SlashCommandSubcommandBuilder) =>
           { name: "action", value: "action" },
           { name: "resistance", value: "resist" },
           { name: "fortune/downtime", value: "fortune" },
-          { name: "clear stress", value: "clearstress" }
+          { name: "clear stress", value: "clearStress" }
         )
     );
 

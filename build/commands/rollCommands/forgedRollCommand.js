@@ -11,5 +11,5 @@ const forgedRollCommand = (subcommand) => subcommand
     .setName("type")
     .setDescription("The type of roll you'd like to make.")
     .setRequired(true)
-    .addChoices({ name: "action", value: "action" }, { name: "resistance", value: "resist" }, { name: "fortune/downtime", value: "fortune" }, { name: "clear stress", value: "clearstress" }));
+    .addChoices({ name: "action", value: "action" }, { name: "resistance", value: "resist" }, { name: "fortune/downtime", value: "fortune" }, { name: "clear stress", value: "clearStress" }));
 exports.default = forgedRollCommand;

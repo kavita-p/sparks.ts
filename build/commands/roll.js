@@ -51,6 +51,7 @@ const execute = async (interaction) => {
                 action: forgedDice_1.actionRoll,
                 resist: forgedDice_1.resistanceRoll,
                 fortune: forgedDice_1.fortuneRoll,
+                clearStress: forgedDice_1.clearStress,
             };
             let rollType = interaction.options.getString("type");
             response = rollFunctions[rollType](pool);

@@ -4,7 +4,12 @@ import RollResponse from "../utils/response";
 //various dice-based roll utilities
 import rollDice from "../utils/rollDice";
 import { skillCheck, falloutTest } from "../utils/sbrDice";
-import { actionRoll, fortuneRoll, resistanceRoll } from "../utils/forgedDice";
+import {
+  actionRoll,
+  fortuneRoll,
+  resistanceRoll,
+  clearStress,
+} from "../utils/forgedDice";
 import customRollCommand from "./rollCommands/customRollCommand";
 import sbrRollCommand from "./rollCommands/sbrRollCommand";
 import forgedRollCommand from "./rollCommands/forgedRollCommand";
@@ -45,6 +50,7 @@ export const execute = async (interaction: Interaction) => {
         action: actionRoll,
         resist: resistanceRoll,
         fortune: fortuneRoll,
+        clearStress: clearStress,
       };
       let rollType = interaction.options.getString("type");
       response = rollFunctions[rollType](pool);
