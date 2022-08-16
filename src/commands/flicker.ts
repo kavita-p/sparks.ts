@@ -6,5 +6,5 @@ export const data = new SlashCommandBuilder()
 
 export const execute = async (interaction: Interaction) => {
   if (!interaction.isRepliable()) return;
-  await interaction.reply("Hummmmmmmmmm");
+  await interaction.reply("Hummmmmmmmmm...");
 };

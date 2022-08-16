@@ -4,12 +4,6 @@ const forgedRollCommand = (subcommand: SlashCommandSubcommandBuilder) =>
   subcommand
     .setName("forged")
     .setDescription("Rolls a Forged in the Dark roll.")
-    .addIntegerOption((option) =>
-      option
-        .setName("pool")
-        .setDescription("The size of your dice pool.")
-        .setRequired(true)
-    )
     .addStringOption((option) =>
       option
         .setName("type")
@@ -21,6 +15,11 @@ const forgedRollCommand = (subcommand: SlashCommandSubcommandBuilder) =>
           { name: "fortune/downtime", value: "fortune" },
           { name: "clear stress", value: "clearStress" }
         )
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName("pool")
+        .setDescription("The size of your dice pool.")
+        .setRequired(true)
     );
-
 export default forgedRollCommand;

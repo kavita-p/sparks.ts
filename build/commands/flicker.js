@@ -8,6 +8,6 @@ exports.data = new discord_js_1.SlashCommandBuilder()
 const execute = async (interaction) => {
     if (!interaction.isRepliable())
         return;
-    await interaction.reply("Hummmmmmmmmm");
+    await interaction.reply("Hummmmmmmmmm...");
 };
 exports.execute = execute;
