@@ -1,4 +1,5 @@
 import rollDice from "./rollDice";
+import RollResponse from "./response";
 
 export const skillCheck = (pool: number) => {
   let zeroDice: Boolean = false;
@@ -7,7 +8,7 @@ export const skillCheck = (pool: number) => {
     zeroDice = true;
   }
   let dice = rollDice(pool, 10);
-  let response = { title: "", description: "", dice: "", status: "" };
+  let response = new RollResponse();
 
   let successTable = [
     { title: "Critical success", status: "crit" },

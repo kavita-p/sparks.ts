@@ -3,8 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resistanceRoll = exports.fortuneRoll = exports.actionRoll = void 0;
+exports.clearStress = exports.resistanceRoll = exports.fortuneRoll = exports.actionRoll = void 0;
 const rollDice_1 = __importDefault(require("./rollDice"));
+const response_1 = __importDefault(require("./response"));
 const checkCrit = (rolls) => {
     let sixes = 0;
     rolls.forEach((roll) => {
@@ -16,7 +17,8 @@ const checkCrit = (rolls) => {
 const actionRoll = (pool) => {
     let dice = (0, rollDice_1.default)(pool, 6);
     let { isCrit, sixes } = checkCrit(dice.rolls);
-    let response = { title: "", description: "", dice: "", status: "" };
+    let response = new response_1.default();
+    //I've considered trying to factor out the logic below into its own pair of functions, but I think that would end up making the game logic more complex, not less.
     if (isCrit) {
         response.title = "Critical success!";
         response.description = `Got **${sixes} sixes** on ${pool}d. Your action has **increased effect.**`;
@@ -38,6 +40,7 @@ const actionRoll = (pool) => {
             case 1:
                 response.title = "Failure";
                 response.status = "fail";
+                break;
         }
         response.title += "!";
         response.description += `Got **${dice.max}** on ${pool}d.`;
@@ -49,7 +52,7 @@ exports.actionRoll = actionRoll;
 const fortuneRoll = (pool) => {
     let dice = (0, rollDice_1.default)(pool, 6);
     let { isCrit, sixes } = checkCrit(dice.rolls);
-    let response = { title: "", description: "", dice: "", status: "" };
+    let response = new response_1.default();
     if (isCrit) {
         response.title = "Critical!";
         response.description = `Extreme effect, or 5 ticks on the relevant clock. Got **${sixes} sixes** on ${pool}d.`;
@@ -83,7 +86,7 @@ const fortuneRoll = (pool) => {
 exports.fortuneRoll = fortuneRoll;
 const resistanceRoll = (pool) => {
     let dice = (0, rollDice_1.default)(pool, 6);
-    let response = { title: "", description: "", dice: "", status: "" };
+    let response = new response_1.default();
     let { isCrit, sixes } = checkCrit(dice.rolls);
     if (isCrit) {
         response.title = "Clear 1 stress!";
@@ -105,3 +108,18 @@ const resistanceRoll = (pool) => {
     return response;
 };
 exports.resistanceRoll = resistanceRoll;
+const clearStress = (pool) => {
+    let dice = (0, rollDice_1.default)(pool, 6);
+    let response = new response_1.default();
+    response.title = `Clear **${dice.max}** stress.`;
+    response.description = `If this is more stress than you currently have, you **overindulge**.`;
+    response.status =
+        dice.max === 6
+            ? "full"
+            : dice.max === 5 || dice.max == 4
+                ? "mixed"
+                : "fail";
+    response.dice = dice.rolls.join(", ");
+    return response;
+};
+exports.clearStress = clearStress;

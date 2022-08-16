@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.falloutTest = exports.skillCheck = void 0;
 const rollDice_1 = __importDefault(require("./rollDice"));
+const response_1 = __importDefault(require("./response"));
 const skillCheck = (pool) => {
     let zeroDice = false;
     if (pool <= 0) {
@@ -12,7 +13,7 @@ const skillCheck = (pool) => {
         zeroDice = true;
     }
     let dice = (0, rollDice_1.default)(pool, 10);
-    let response = { title: "", description: "", dice: "", status: "" };
+    let response = new response_1.default();
     let successTable = [
         { title: "Critical success", status: "crit" },
         { title: "Clean success", status: "full" },

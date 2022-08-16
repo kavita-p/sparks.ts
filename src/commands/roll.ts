@@ -1,4 +1,7 @@
+//builders
 import { Interaction, SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import RollResponse from "../utils/response";
+//various dice-based roll utilities
 import rollDice from "../utils/rollDice";
 import { skillCheck, falloutTest } from "../utils/sbrDice";
 import { actionRoll, fortuneRoll, resistanceRoll } from "../utils/forgedDice";
@@ -18,7 +21,7 @@ export const execute = async (interaction: Interaction) => {
   let rollType =
     interaction.options.getSubcommandGroup() ||
     interaction.options.getSubcommand();
-  let response = { title: "", description: "", dice: "", status: "" };
+  let response = new RollResponse();
   switch (rollType) {
     case "custom":
       let count = interaction.options.getInteger("count");

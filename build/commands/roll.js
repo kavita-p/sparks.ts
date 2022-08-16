@@ -4,7 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = exports.data = void 0;
+//builders
 const discord_js_1 = require("discord.js");
+const response_1 = __importDefault(require("../utils/response"));
+//various dice-based roll utilities
 const rollDice_1 = __importDefault(require("../utils/rollDice"));
 const sbrDice_1 = require("../utils/sbrDice");
 const forgedDice_1 = require("../utils/forgedDice");
@@ -22,7 +25,7 @@ const execute = async (interaction) => {
         return;
     let rollType = interaction.options.getSubcommandGroup() ||
         interaction.options.getSubcommand();
-    let response = { title: "", description: "", dice: "", status: "" };
+    let response = new response_1.default();
     switch (rollType) {
         case "custom":
             let count = interaction.options.getInteger("count");
