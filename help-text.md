@@ -1,6 +1,6 @@
 Hi! This is the help info for Sparks, the indie TRPG Discord bot.
 
-Sparks' dice-rolling commands are all subcommands of `/roll`. For example, `/roll sbr fallout` rolls a Sparked by Resistance fallout test. The full list of commands is as follows:
+Sparks' dice-rolling commands are all subcommands of `/roll`. For example, `/roll sbr fallout` rolls a Sparked by Resistance fallout test. Her full list of commands is as follows:
 
 - `/roll sbr check`: rolls a Sparked by Resistance check. Requires the number of d10s to toll.
 
