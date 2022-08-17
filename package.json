@@ -13,7 +13,7 @@
     "dev": "concurrently \"tsc -w\" \"nodemon build/index.js\"",
     "debug": "nodemon src/index.ts",
     "deploy:commands": "node build/deploy-commands.js",
-    "format": "prettier --write .",
+    "format": "prettier --write . --no-config",
     "prepare": "husky install",
     "build": "tsc"
   },
