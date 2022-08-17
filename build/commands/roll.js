@@ -11,15 +11,16 @@ const response_1 = __importDefault(require("../utils/response"));
 const rollDice_1 = __importDefault(require("../utils/rollDice"));
 const sbrDice_1 = require("../utils/sbrDice");
 const forgedDice_1 = require("../utils/forgedDice");
-const customRollCommand_1 = __importDefault(require("./rollCommands/customRollCommand"));
-const sbrRollCommand_1 = __importDefault(require("./rollCommands/sbrRollCommand"));
-const forgedRollCommand_1 = __importDefault(require("./rollCommands/forgedRollCommand"));
+//commands
+const rollCommandBuilders_1 = require("../utils/rollCommandBuilders");
+const pbtaDice_1 = require("../utils/pbtaDice");
 exports.data = new discord_js_1.SlashCommandBuilder()
     .setName("roll")
     .setDescription("Rolls dice")
-    .addSubcommandGroup(sbrRollCommand_1.default)
-    .addSubcommand(forgedRollCommand_1.default)
-    .addSubcommand(customRollCommand_1.default);
+    .addSubcommandGroup(rollCommandBuilders_1.sbrRollCommand)
+    .addSubcommand(rollCommandBuilders_1.forgedRollCommand)
+    .addSubcommand(rollCommandBuilders_1.customRollCommand)
+    .addSubcommand(rollCommandBuilders_1.pbtaRollCommand);
 const execute = async (interaction) => {
     if (!interaction.isRepliable || !interaction.isChatInputCommand())
         return;
@@ -55,6 +56,10 @@ const execute = async (interaction) => {
             };
             let rollType = interaction.options.getString("type");
             response = rollFunctions[rollType](pool);
+            break;
+        case "pbta":
+            let stat = interaction.options.getInteger("stat");
+            response = (0, pbtaDice_1.pbtaRoll)(stat);
             break;
     }
     if (response.description.length === 0)

@@ -10,16 +10,22 @@ import {
   resistanceRoll,
   clearStress,
 } from "../utils/forgedDice";
-import customRollCommand from "./rollCommands/customRollCommand";
-import sbrRollCommand from "./rollCommands/sbrRollCommand";
-import forgedRollCommand from "./rollCommands/forgedRollCommand";
+//commands
+import {
+  sbrRollCommand,
+  forgedRollCommand,
+  customRollCommand,
+  pbtaRollCommand,
+} from "../utils/rollCommandBuilders";
+import { pbtaRoll } from "../utils/pbtaDice";
 
 export const data = new SlashCommandBuilder()
   .setName("roll")
   .setDescription("Rolls dice")
   .addSubcommandGroup(sbrRollCommand)
   .addSubcommand(forgedRollCommand)
-  .addSubcommand(customRollCommand);
+  .addSubcommand(customRollCommand)
+  .addSubcommand(pbtaRollCommand);
 
 export const execute = async (interaction: Interaction) => {
   if (!interaction.isRepliable || !interaction.isChatInputCommand()) return;
@@ -54,6 +60,10 @@ export const execute = async (interaction: Interaction) => {
       };
       let rollType = interaction.options.getString("type");
       response = rollFunctions[rollType](pool);
+      break;
+    case "pbta":
+      let stat = interaction.options.getInteger("stat");
+      response = pbtaRoll(stat);
       break;
   }
   if (response.description.length === 0) response.description = "Placeholder!";
