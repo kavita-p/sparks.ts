@@ -47,20 +47,20 @@ const skillCheck = (pool) => {
         if (i === 4) {
             response.title = "Critical failure!";
             response.description = `Rolled **${dice.max}** on 0d (1d with an alternate success table.)`;
-            response.dice = "1";
+            response.dice = [1];
             response.status = "critfail";
         }
         else {
             response.title = dice.max.toString();
             response.description = `You've asked for a 0d roll! To resolve this, a special success table is applied to a roll of **1d**, on which you got a **${dice.max}**. If you're playing *Spire: The City Must Fall* your **${successTable[i].title.toLowerCase()}** is reduced to a **${successTable[i + 1].title.toLowerCase()}**. In most other SbR systems, your **${dice.max}** counts as a **${dice.max === 10 ? "strained success" : "failure"}**.`;
-            response.dice = dice.max.toString();
+            response.dice = [dice.max];
             response.status = "fail";
         }
     }
     else {
         response.title = `${successTable[i].title}!`;
         response.description = `Rolled **${dice.max}** on ${pool}d10.`;
-        response.dice = dice.rolls.join(", ");
+        response.dice = dice.rolls;
         response.status = successTable[i].status;
     }
     return response;
@@ -68,16 +68,11 @@ const skillCheck = (pool) => {
 exports.skillCheck = skillCheck;
 const falloutTest = () => {
     let die = (0, rollDice_1.default)(1, 12);
-    let response = {
-        title: "",
-        description: "",
-        dice: "",
-        status: "",
-    };
+    let response = new response_1.default();
     response.title += `Rolled ${die.max.toString()} to test for fallout.`;
     response.description = `Take **${die.max > 6 ? "major" : "minor"}** fallout if this roll is **lower** than your total stress.`;
     response.status = die.max > 6 ? "fail" : "mixed";
-    response.dice = die.max.toString();
+    response.dice = [die.max];
     return response;
 };
 exports.falloutTest = falloutTest;

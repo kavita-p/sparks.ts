@@ -44,7 +44,7 @@ export const actionRoll = (pool: number) => {
     }.`;
   }
 
-  response.dice = rolls.join(", ");
+  response.dice = rolls;
   return response;
 };
 
@@ -82,7 +82,7 @@ export const fortuneRoll = (pool: number) => {
     }.`;
   }
 
-  response.dice = rolls.join(", ");
+  response.dice = rolls;
   return response;
 };
 
@@ -103,7 +103,7 @@ export const resistanceRoll = (pool: number) => {
       score === 6 ? "full" : score === 5 || score == 4 ? "mixed" : "fail";
   }
 
-  response.dice = rolls.join(", ");
+  response.dice = rolls;
   return response;
 };
 
@@ -116,6 +116,6 @@ export const clearStress = (pool: number) => {
   }If this is more stress than you currently have, you **overindulge**.`;
   response.status =
     score === 6 ? "full" : score === 5 || score == 4 ? "mixed" : "fail";
-  response.dice = rolls.join(", ");
+  response.dice = rolls;
   return response;
 };

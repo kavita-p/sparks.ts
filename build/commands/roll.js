@@ -33,7 +33,7 @@ const execute = async (interaction) => {
             let dice = (0, rollDice_1.default)(count, sides);
             response.title = dice.max.toString();
             response.description += `Rolled ${count}d${sides} (max: ${dice.max}, min: ${dice.min}).`;
-            response.dice = dice.rolls.join(", ");
+            response.dice = dice.rolls;
             if (dice.max === sides)
                 response.status = "full";
             break;
@@ -69,7 +69,7 @@ const execute = async (interaction) => {
     let embed = new discord_js_1.EmbedBuilder()
         .setTitle(response.title)
         .setDescription(response.description)
-        .addFields({ name: "Rolls", value: response.dice })
+        .addFields({ name: "Rolls", value: response.dice.join(", ") })
         .setColor(colors[response.status]);
     await interaction.reply({ embeds: [embed] });
 };

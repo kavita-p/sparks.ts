@@ -46,7 +46,7 @@ export const skillCheck = (pool: number) => {
     if (i === 4) {
       response.title = "Critical failure!";
       response.description = `Rolled **${dice.max}** on 0d (1d with an alternate success table.)`;
-      response.dice = "1";
+      response.dice = [1];
       response.status = "critfail";
     } else {
       response.title = dice.max.toString();
@@ -59,13 +59,13 @@ export const skillCheck = (pool: number) => {
       ].title.toLowerCase()}**. In most other SbR systems, your **${
         dice.max
       }** counts as a **${dice.max === 10 ? "strained success" : "failure"}**.`;
-      response.dice = dice.max.toString();
+      response.dice = [dice.max];
       response.status = "fail";
     }
   } else {
     response.title = `${successTable[i].title}!`;
     response.description = `Rolled **${dice.max}** on ${pool}d10.`;
-    response.dice = dice.rolls.join(", ");
+    response.dice = dice.rolls;
     response.status = successTable[i].status;
   }
 
@@ -74,17 +74,12 @@ export const skillCheck = (pool: number) => {
 
 export const falloutTest = () => {
   let die = rollDice(1, 12);
-  let response = {
-    title: "",
-    description: "",
-    dice: "",
-    status: "",
-  };
+  let response = new RollResponse();
   response.title += `Rolled ${die.max.toString()} to test for fallout.`;
   response.description = `Take **${
     die.max > 6 ? "major" : "minor"
   }** fallout if this roll is **lower** than your total stress.`;
   response.status = die.max > 6 ? "fail" : "mixed";
-  response.dice = die.max.toString();
+  response.dice = [die.max];
   return response;
 };

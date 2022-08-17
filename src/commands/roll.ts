@@ -34,7 +34,7 @@ export const execute = async (interaction: Interaction) => {
       let dice = rollDice(count, sides);
       response.title = dice.max.toString();
       response.description += `Rolled ${count}d${sides} (max: ${dice.max}, min: ${dice.min}).`;
-      response.dice = dice.rolls.join(", ");
+      response.dice = dice.rolls;
       if (dice.max === sides) response.status = "full";
       break;
     case "sbr":
@@ -69,7 +69,7 @@ export const execute = async (interaction: Interaction) => {
   let embed = new EmbedBuilder()
     .setTitle(response.title)
     .setDescription(response.description)
-    .addFields({ name: "Rolls", value: response.dice })
+    .addFields({ name: "Rolls", value: response.dice.join(", ") })
     .setColor(colors[response.status]);
   await interaction.reply({ embeds: [embed] });
 };

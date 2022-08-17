@@ -46,7 +46,7 @@ const actionRoll = (pool) => {
         response.title += "!";
         response.description += `Got **${score}** on ${pool}d${zD ? " (rolled as the lowest of 2d)" : ""}.`;
     }
-    response.dice = rolls.join(", ");
+    response.dice = rolls;
     return response;
 };
 exports.actionRoll = actionRoll;
@@ -80,7 +80,7 @@ const fortuneRoll = (pool) => {
         }
         response.description += ` Got **${score}** on ${pool}d${zD ? " (rolled as the lowest of 2d)" : ""}.`;
     }
-    response.dice = rolls.join(", ");
+    response.dice = rolls;
     return response;
 };
 exports.fortuneRoll = fortuneRoll;
@@ -98,7 +98,7 @@ const resistanceRoll = (pool) => {
         response.status =
             score === 6 ? "full" : score === 5 || score == 4 ? "mixed" : "fail";
     }
-    response.dice = rolls.join(", ");
+    response.dice = rolls;
     return response;
 };
 exports.resistanceRoll = resistanceRoll;
@@ -109,7 +109,7 @@ const clearStress = (pool) => {
     response.description = `${zD ? "(Rolled as the lowest of 2d.)\n\n" : ""}If this is more stress than you currently have, you **overindulge**.`;
     response.status =
         score === 6 ? "full" : score === 5 || score == 4 ? "mixed" : "fail";
-    response.dice = rolls.join(", ");
+    response.dice = rolls;
     return response;
 };
 exports.clearStress = clearStress;
