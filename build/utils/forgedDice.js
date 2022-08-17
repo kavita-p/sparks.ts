@@ -85,7 +85,7 @@ const fortuneRoll = (pool) => {
 };
 exports.fortuneRoll = fortuneRoll;
 const resistanceRoll = (pool) => {
-    let { score, rolls, isCrit, sixes } = rollForgedDice(pool);
+    let { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
     let response = new response_1.default();
     if (isCrit) {
         response.title = "Clear 1 stress!";
@@ -94,7 +94,7 @@ const resistanceRoll = (pool) => {
     }
     else {
         response.title += `Take **${6 - score}** stress to resist.`;
-        response.description += `(6 minus your maximum of **${score}**.)`;
+        response.description += `6 minus your score of **${score}** on **${pool}d** ${zD ? " (rolled as the lowest of 2d)" : ""}.`;
         response.status =
             score === 6 ? "full" : score === 5 || score == 4 ? "mixed" : "fail";
     }
@@ -103,10 +103,10 @@ const resistanceRoll = (pool) => {
 };
 exports.resistanceRoll = resistanceRoll;
 const clearStress = (pool) => {
-    let { score, rolls } = rollForgedDice(pool);
+    let { score, rolls, zD } = rollForgedDice(pool);
     let response = new response_1.default();
     response.title = `Clear **${score}** stress.`;
-    response.description = `If this is more stress than you currently have, you **overindulge**.`;
+    response.description = `${zD ? "(Rolled as the lowest of 2d.)\n\n" : ""}If this is more stress than you currently have, you **overindulge**.`;
     response.status =
         score === 6 ? "full" : score === 5 || score == 4 ? "mixed" : "fail";
     response.dice = rolls.join(", ");
