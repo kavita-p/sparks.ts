@@ -6,26 +6,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.clearStress = exports.resistanceRoll = exports.fortuneRoll = exports.actionRoll = void 0;
 const rollDice_1 = __importDefault(require("./rollDice"));
 const response_1 = __importDefault(require("./response"));
-const checkCrit = (rolls) => {
+const rollForgedDice = (pool) => {
+    let zD = pool <= 0;
+    let dice = (0, rollDice_1.default)(zD ? 2 : pool, 6);
     let sixes = 0;
-    rolls.forEach((roll) => {
+    dice.rolls.forEach((roll) => {
         if (roll === 6)
             sixes++;
     });
-    return { isCrit: sixes >= 2, sixes };
+    let score = zD ? dice.min : dice.max;
+    return { score, rolls: dice.rolls, zD, isCrit: sixes >= 2, sixes };
 };
 const actionRoll = (pool) => {
-    let dice = (0, rollDice_1.default)(pool, 6);
-    let { isCrit, sixes } = checkCrit(dice.rolls);
+    let { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
     let response = new response_1.default();
-    //I've considered trying to factor out the logic below into its own pair of functions, but I think that would end up making the game logic more complex, not less.
     if (isCrit) {
         response.title = "Critical success!";
         response.description = `Got **${sixes} sixes** on ${pool}d. Your action has **increased effect.**`;
         response.status = "crit";
     }
     else {
-        switch (dice.max) {
+        switch (score) {
             case 6:
                 response.title = "Full success";
                 response.status = "full";
@@ -43,15 +44,14 @@ const actionRoll = (pool) => {
                 break;
         }
         response.title += "!";
-        response.description += `Got **${dice.max}** on ${pool}d.`;
+        response.description += `Got **${score}** on ${pool}d${zD ? " (rolled as the lowest of 2d)" : ""}.`;
     }
-    response.dice = dice.rolls.join(", ");
+    response.dice = rolls.join(", ");
     return response;
 };
 exports.actionRoll = actionRoll;
 const fortuneRoll = (pool) => {
-    let dice = (0, rollDice_1.default)(pool, 6);
-    let { isCrit, sixes } = checkCrit(dice.rolls);
+    let { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
     let response = new response_1.default();
     if (isCrit) {
         response.title = "Critical!";
@@ -59,7 +59,7 @@ const fortuneRoll = (pool) => {
         response.status = "crit";
     }
     else {
-        switch (dice.max) {
+        switch (score) {
             case 6:
                 response.title = "Full effect!";
                 response.description = "**3 ticks** on the relevant clock.";
@@ -78,48 +78,38 @@ const fortuneRoll = (pool) => {
                 response.description = "**1 tick** on the relevant clock.";
                 response.status = "fail";
         }
-        response.description += ` Got **${dice.max}** on ${pool}d.`;
+        response.description += ` Got **${score}** on ${pool}d${zD ? " (rolled as the lowest of 2d)" : ""}.`;
     }
-    response.dice = dice.rolls.join(", ");
+    response.dice = rolls.join(", ");
     return response;
 };
 exports.fortuneRoll = fortuneRoll;
 const resistanceRoll = (pool) => {
-    let dice = (0, rollDice_1.default)(pool, 6);
+    let { score, rolls, isCrit, sixes } = rollForgedDice(pool);
     let response = new response_1.default();
-    let { isCrit, sixes } = checkCrit(dice.rolls);
     if (isCrit) {
         response.title = "Clear 1 stress!";
         response.description += `Rolled a **critical** to resist. (Got **${sixes}** sixes.)`;
         response.status += "crit";
     }
     else {
-        response.title += `Take **${6 - dice.max}** stress to resist.`;
-        response.description += `(6 minus your maximum of **${dice.max}**.)`;
-        response.dice = dice.rolls.join(", ");
+        response.title += `Take **${6 - score}** stress to resist.`;
+        response.description += `(6 minus your maximum of **${score}**.)`;
         response.status =
-            dice.max === 6
-                ? "full"
-                : dice.max === 5 || dice.max == 4
-                    ? "mixed"
-                    : "fail";
+            score === 6 ? "full" : score === 5 || score == 4 ? "mixed" : "fail";
     }
-    response.dice = dice.rolls.join(", ");
+    response.dice = rolls.join(", ");
     return response;
 };
 exports.resistanceRoll = resistanceRoll;
 const clearStress = (pool) => {
-    let dice = (0, rollDice_1.default)(pool, 6);
+    let { score, rolls } = rollForgedDice(pool);
     let response = new response_1.default();
-    response.title = `Clear **${dice.max}** stress.`;
+    response.title = `Clear **${score}** stress.`;
     response.description = `If this is more stress than you currently have, you **overindulge**.`;
     response.status =
-        dice.max === 6
-            ? "full"
-            : dice.max === 5 || dice.max == 4
-                ? "mixed"
-                : "fail";
-    response.dice = dice.rolls.join(", ");
+        score === 6 ? "full" : score === 5 || score == 4 ? "mixed" : "fail";
+    response.dice = rolls.join(", ");
     return response;
 };
 exports.clearStress = clearStress;
