@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { Routes } from "discord.js";
 import { REST } from "@discordjs/rest";
-import { clientId, token } from "./config.json";
+import { clientId, token } from "../config.json";
 
 const commands = [];
 const commandsPath = path.join(__dirname, "commands");

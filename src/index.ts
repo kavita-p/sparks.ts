@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { Client, Collection, GatewayIntentBits } from "discord.js";
-import { token } from "./config.json";
+import { token } from "../config.json";
 
 console.log("Morning! Waking up...");
 
