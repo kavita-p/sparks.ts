@@ -94,7 +94,7 @@ const resistanceRoll = (pool) => {
     }
     else {
         response.title += `Take **${6 - score}** stress to resist.`;
-        response.description += `6 minus your score of **${score}** on **${pool}d** ${zD ? " (rolled as the lowest of 2d)" : ""}.`;
+        response.description += `6 minus your score of **${score}** on **${pool}d**${zD ? " (rolled as the lowest of 2d)" : ""}.`;
         response.status =
             score === 6 ? "full" : score === 5 || score == 4 ? "mixed" : "fail";
     }
