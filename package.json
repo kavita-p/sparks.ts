@@ -2,7 +2,6 @@
   "name": "sparks",
   "description": "A Sparked by Resistance dice-rolling bot for Discord",
   "author": "Kavita Poduri kavi.pdri@gmail.com (http://github.com/yrgirlkv)",
-  "packageManager": "yarn@3.2.2",
   "dependencies": {
     "@discordjs/rest": "^1.0.1",
     "discord.js": "^14.1.1"
