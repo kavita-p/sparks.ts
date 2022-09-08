@@ -35,8 +35,7 @@ const execute = async (interaction) => {
             response.title = dice.max.toString();
             response.description += `Rolled ${count}d${sides} (max: ${dice.max}, min: ${dice.min}).`;
             response.dice = dice.rolls;
-            if (dice.max === sides)
-                response.status = "full";
+            response.status = "full";
             break;
         case "sbr":
             if (interaction.options.getSubcommand() === "fallout") {
