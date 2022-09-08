@@ -1,4 +1,2 @@
-.yarn/*
-.pnp.*
-.yarn*
 build/*
+node_modules/
