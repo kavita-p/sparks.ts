@@ -28,7 +28,7 @@ const execute = async (interaction) => {
         interaction.options.getSubcommand();
     let response = new response_1.default();
     switch (rollType) {
-        case "custom":
+        case "custom": {
             let count = interaction.options.getInteger("count");
             let sides = interaction.options.getInteger("sides");
             let dice = (0, rollDice_1.default)(count, sides);
@@ -37,7 +37,8 @@ const execute = async (interaction) => {
             response.dice = dice.rolls;
             response.status = "full";
             break;
-        case "sbr":
+        }
+        case "sbr": {
             if (interaction.options.getSubcommand() === "fallout") {
                 response = (0, sbrDice_1.falloutTest)();
             }
@@ -45,7 +46,8 @@ const execute = async (interaction) => {
                 response = (0, sbrDice_1.skillCheck)(interaction.options.getInteger("pool"));
             }
             break;
-        case "forged":
+        }
+        case "forged": {
             let pool = interaction.options.getInteger("pool");
             let rollFunctions = {
                 action: forgedDice_1.actionRoll,
@@ -56,10 +58,12 @@ const execute = async (interaction) => {
             let rollType = interaction.options.getString("type");
             response = rollFunctions[rollType](pool);
             break;
-        case "pbta":
+        }
+        case "pbta": {
             let stat = interaction.options.getInteger("stat");
             response = (0, pbtaDice_1.pbtaRoll)(stat);
             break;
+        }
     }
     if (response.description.length === 0)
         response.description = "Placeholder!";
