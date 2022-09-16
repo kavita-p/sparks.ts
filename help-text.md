@@ -14,7 +14,7 @@ Sparks' dice-rolling commands are all subcommands of `/roll`. For example, `/rol
 
 - `/flicker`: Sparks will reply with "Hummmmmmmmmm...", like the sound of a flickering fluorescent light.
 
-- `/help`: Sparks will reproduce these instructions.
+- `/sparks-help`: Sparks will reproduce these instructions.
 
 Note: The `/roll` command currently treats negative numbers as zeros for FitD and SbR games, since ost of these games don't really deal with negative pools in their rules.
 
