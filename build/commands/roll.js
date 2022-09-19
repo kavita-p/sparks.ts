@@ -31,6 +31,8 @@ const execute = async (interaction) => {
         case "custom": {
             let count = interaction.options.getInteger("count");
             let sides = interaction.options.getInteger("sides");
+            if (!count || !sides)
+                return;
             let dice = (0, rollDice_1.default)(count, sides);
             response.title = dice.max.toString();
             response.description += `Rolled ${count}d${sides} (max: ${dice.max}, min: ${dice.min}).`;
@@ -43,7 +45,10 @@ const execute = async (interaction) => {
                 response = (0, sbrDice_1.falloutTest)();
             }
             else if (interaction.options.getSubcommand() === "check") {
-                response = (0, sbrDice_1.skillCheck)(interaction.options.getInteger("pool"));
+                let pool = interaction.options.getInteger("pool");
+                if (!pool)
+                    return;
+                response = (0, sbrDice_1.skillCheck)(pool);
             }
             break;
         }
@@ -56,11 +61,15 @@ const execute = async (interaction) => {
                 clearStress: forgedDice_1.clearStress,
             };
             let rollType = interaction.options.getString("type");
+            if (!rollType)
+                return;
             response = rollFunctions[rollType](pool);
             break;
         }
         case "pbta": {
             let stat = interaction.options.getInteger("stat");
+            if (!stat)
+                return;
             response = (0, pbtaDice_1.pbtaRoll)(stat);
             break;
         }

@@ -21,7 +21,7 @@ const skillCheck = (pool) => {
         { title: "Failure", status: "fail" },
         { title: "Critical failure", status: "critfail" },
     ];
-    let i;
+    let i = 0;
     switch (dice.max) {
         case 10:
             i = 0;

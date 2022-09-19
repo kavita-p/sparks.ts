@@ -18,7 +18,7 @@ export const skillCheck = (pool: number) => {
     { title: "Critical failure", status: "critfail" },
   ];
 
-  let i: number;
+  let i = 0;
 
   switch (dice.max) {
     case 10:

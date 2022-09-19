@@ -1,5 +1,10 @@
 //builders
-import { Interaction, SlashCommandBuilder, EmbedBuilder } from "discord.js";
+import {
+  Interaction,
+  SlashCommandBuilder,
+  EmbedBuilder,
+  ColorResolvable,
+} from "discord.js";
 import RollResponse from "../utils/response";
 //various dice-based roll utilities
 import rollDice from "../utils/rollDice";
@@ -37,6 +42,7 @@ export const execute = async (interaction: Interaction) => {
     case "custom": {
       let count = interaction.options.getInteger("count");
       let sides = interaction.options.getInteger("sides");
+      if (!count || !sides) return;
       let dice = rollDice(count, sides);
       response.title = dice.max.toString();
       response.description += `Rolled ${count}d${sides} (max: ${dice.max}, min: ${dice.min}).`;
@@ -48,31 +54,35 @@ export const execute = async (interaction: Interaction) => {
       if (interaction.options.getSubcommand() === "fallout") {
         response = falloutTest();
       } else if (interaction.options.getSubcommand() === "check") {
-        response = skillCheck(interaction.options.getInteger("pool"));
+        let pool = interaction.options.getInteger("pool");
+        if (!pool) return;
+        response = skillCheck(pool);
       }
       break;
     }
     case "forged": {
       let pool = interaction.options.getInteger("pool");
-      let rollFunctions = {
+      let rollFunctions: { [key: string]: Function } = {
         action: actionRoll,
         resist: resistanceRoll,
         fortune: fortuneRoll,
         clearStress: clearStress,
       };
       let rollType = interaction.options.getString("type");
+      if (!rollType) return;
       response = rollFunctions[rollType](pool);
       break;
     }
     case "pbta": {
       let stat = interaction.options.getInteger("stat");
+      if (!stat) return;
       response = pbtaRoll(stat);
       break;
     }
   }
   if (response.description.length === 0) response.description = "Placeholder!";
 
-  let colors = {
+  let colors: { [key: string]: ColorResolvable } = {
     critfail: "DarkRed",
     fail: "Red",
     mixed: "Gold",
