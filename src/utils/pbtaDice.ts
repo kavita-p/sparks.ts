@@ -2,9 +2,9 @@ import rollDice from "./rollDice";
 import RollResponse from "./response";
 
 export const pbtaRoll = (stat: number) => {
-  let dice = rollDice(2, 6);
-  let score = dice.rolls[0] + dice.rolls[1] + stat;
-  let response = new RollResponse();
+  const dice = rollDice(2, 6);
+  const score = dice.rolls[0] + dice.rolls[1] + stat;
+  const response = new RollResponse();
   if (score >= 12) {
     response.title = "Full success!";
     response.status = "crit";

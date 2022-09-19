@@ -1,6 +1,6 @@
 export default class RollResponse {
-  title: string = "";
-  description: string = "";
+  title = "";
+  description = "";
   dice: number[] = [];
-  status: string = "";
+  status = "";
 }

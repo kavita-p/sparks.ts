@@ -1,20 +1,17 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.falloutTest = exports.skillCheck = void 0;
-const rollDice_1 = __importDefault(require("./rollDice"));
-const response_1 = __importDefault(require("./response"));
+const rollDice_1 = require("./rollDice");
+const response_1 = require("./response");
 const skillCheck = (pool) => {
     let zeroDice = false;
     if (pool <= 0) {
         pool = 1;
         zeroDice = true;
     }
-    let dice = (0, rollDice_1.default)(pool, 10);
-    let response = new response_1.default();
-    let successTable = [
+    const dice = (0, rollDice_1.default)(pool, 10);
+    const response = new response_1.default();
+    const successTable = [
         { title: "Critical success", status: "crit" },
         { title: "Clean success", status: "full" },
         { title: "Strained success", status: "mixed" },
@@ -67,8 +64,8 @@ const skillCheck = (pool) => {
 };
 exports.skillCheck = skillCheck;
 const falloutTest = () => {
-    let die = (0, rollDice_1.default)(1, 12);
-    let response = new response_1.default();
+    const die = (0, rollDice_1.default)(1, 12);
+    const response = new response_1.default();
     response.title += `Rolled ${die.max.toString()} to test for fallout.`;
     response.description = `Take **${die.max > 6 ? "major" : "minor"}** fallout if this roll is **lower** than your total stress.`;
     response.status = die.max > 6 ? "fail" : "mixed";

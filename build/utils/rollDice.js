@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const rollDice = (count, sides) => {
-    let results;
-    results = {
+    const results = {
         max: 0,
         rolls: [],
         min: 0,

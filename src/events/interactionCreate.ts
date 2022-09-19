@@ -1,8 +1,11 @@
-import { Collection, Interaction } from "discord.js";
+import { Collection, Interaction, SlashCommandBuilder } from "discord.js";
 
 export const name = "interactionCreate";
 export const execute = async (
-  commands: Collection<String, any>,
+  commands: Collection<
+    string,
+    { data: SlashCommandBuilder; execute: (interaction: Interaction) => void }
+  >,
   interaction: Interaction
 ) => {
   console.log(`${interaction.user.tag} triggered an interaction.`);
@@ -13,7 +16,7 @@ export const execute = async (
   if (!command) return;
 
   try {
-    await command.execute(interaction);
+    command.execute(interaction);
   } catch (error) {
     console.error(error);
     await interaction.reply({

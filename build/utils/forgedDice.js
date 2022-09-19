@@ -1,25 +1,22 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.clearStress = exports.resistanceRoll = exports.fortuneRoll = exports.actionRoll = void 0;
-const rollDice_1 = __importDefault(require("./rollDice"));
-const response_1 = __importDefault(require("./response"));
+const rollDice_1 = require("./rollDice");
+const response_1 = require("./response");
 const rollForgedDice = (pool) => {
-    let zD = pool <= 0;
-    let dice = (0, rollDice_1.default)(zD ? 2 : pool, 6);
+    const zD = pool <= 0;
+    const dice = (0, rollDice_1.default)(zD ? 2 : pool, 6);
     let sixes = 0;
     dice.rolls.forEach((roll) => {
         if (roll === 6)
             sixes++;
     });
-    let score = zD ? dice.min : dice.max;
+    const score = zD ? dice.min : dice.max;
     return { score, rolls: dice.rolls, zD, isCrit: sixes >= 2, sixes };
 };
 const actionRoll = (pool) => {
-    let { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
-    let response = new response_1.default();
+    const { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
+    const response = new response_1.default();
     if (isCrit) {
         response.title = "Critical success!";
         response.description = `Got **${sixes} sixes** on ${pool}d. Your action has **increased effect.**`;
@@ -51,8 +48,8 @@ const actionRoll = (pool) => {
 };
 exports.actionRoll = actionRoll;
 const fortuneRoll = (pool) => {
-    let { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
-    let response = new response_1.default();
+    const { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
+    const response = new response_1.default();
     if (isCrit) {
         response.title = "Critical!";
         response.description = `Extreme effect, or 5 ticks on the relevant clock. Got **${sixes} sixes** on ${pool}d.`;
@@ -85,8 +82,8 @@ const fortuneRoll = (pool) => {
 };
 exports.fortuneRoll = fortuneRoll;
 const resistanceRoll = (pool) => {
-    let { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
-    let response = new response_1.default();
+    const { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
+    const response = new response_1.default();
     if (isCrit) {
         response.title = "Clear 1 stress!";
         response.description += `Rolled a **critical** to resist. (Got **${sixes}** sixes.)`;
@@ -103,8 +100,8 @@ const resistanceRoll = (pool) => {
 };
 exports.resistanceRoll = resistanceRoll;
 const clearStress = (pool) => {
-    let { score, rolls, zD } = rollForgedDice(pool);
-    let response = new response_1.default();
+    const { score, rolls, zD } = rollForgedDice(pool);
+    const response = new response_1.default();
     response.title = `Clear **${score}** stress.`;
     response.description = `${zD ? "(Rolled as the lowest of 2d.)\n\n" : ""}If this is more stress than you currently have, you **overindulge**.`;
     response.status =
