@@ -18,6 +18,6 @@ Sparks' dice-rolling commands are all subcommands of `/roll`. For example, `/rol
 
 - `/sparks-help`: Sparks will reproduce these instructions.
 
-Note: The `/roll` command currently treats negative numbers as zeros for FitD and SbR games, since ost of these games don't really deal with negative pools in their rules.
+Note: The `/roll` command currently treats negative numbers as zeros for FitD and SbR games, since most of these games don't really deal with negative pools in their rules.
 
 If you encounter a bug while using Sparks, you can report it at https://yrgirlkv.itch.io/sparks.
