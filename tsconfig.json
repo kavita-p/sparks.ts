@@ -4,6 +4,7 @@
     "target": "ES2015",
     "module": "CommonJS",
     "resolveJsonModule": true,
+    "esModuleInterop": true,
     "strict": true
   },
   "include": ["./src/**/*"],

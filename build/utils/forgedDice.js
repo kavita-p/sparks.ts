@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.clearStress = exports.resistanceRoll = exports.fortuneRoll = exports.actionRoll = void 0;
-const rollDice_1 = require("./rollDice");
-const response_1 = require("./response");
+const rollDice_1 = __importDefault(require("./rollDice"));
+const response_1 = __importDefault(require("./response"));
 const rollForgedDice = (pool) => {
     const zD = pool <= 0;
     const dice = (0, rollDice_1.default)(zD ? 2 : pool, 6);

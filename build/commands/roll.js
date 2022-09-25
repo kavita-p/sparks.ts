@@ -8,13 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = exports.data = void 0;
 //builders
 const discord_js_1 = require("discord.js");
-const response_1 = require("../utils/response");
+const response_1 = __importDefault(require("../utils/response"));
 //various dice-based roll utilities
-const rollDice_1 = require("../utils/rollDice");
+const rollDice_1 = __importDefault(require("../utils/rollDice"));
 const sbrDice_1 = require("../utils/sbrDice");
 const forgedDice_1 = require("../utils/forgedDice");
 const pbtaDice_1 = require("../utils/pbtaDice");
