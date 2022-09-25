@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.pbtaMove = void 0;
-const lib_1 = require("../lib");
+const lib_1 = require("../utils/lib");
 const pbtaMove = (rolls, stat) => {
     //this reduce is a fancy sum function
     //since javascript and typescript don't have one built-in

@@ -1,11 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.falloutTest = exports.skillCheck = void 0;
-const rollDice_1 = __importDefault(require("./rollDice"));
-const lib_1 = require("../lib");
+const lib_1 = require("../utils/lib");
 const skillCheck = (rolls, zeroD) => {
     let score = rolls.max;
     const status = zeroD
@@ -47,14 +43,10 @@ const skillCheck = (rolls, zeroD) => {
 };
 exports.skillCheck = skillCheck;
 const falloutTest = (rolls) => {
-    const die = (0, rollDice_1.default)(1, 12);
-    const title = `Rolled ${die.max.toString()} to test for fallout.`;
-    const description = `Take **${die.max > 6 ? "major" : "minor"}** fallout if this roll is **lower** than your total stress.`;
-    const status = die.max > 6 ? lib_1.RollStatus.Failure : lib_1.RollStatus.Mixed;
     return {
-        title,
-        description,
-        status,
+        title: `Rolled ${rolls.max} to test for fallout.`,
+        description: `Take **${rolls.max > 6 ? "major" : "minor"}** fallout if this roll is **lower** than your total stress.`,
+        status: rolls.max > 6 ? lib_1.RollStatus.Failure : lib_1.RollStatus.Mixed,
         dice: rolls.dice,
     };
 };

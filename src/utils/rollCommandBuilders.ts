@@ -20,7 +20,7 @@ export const customRollCommand = (subcommand: SlashCommandSubcommandBuilder) =>
         .setRequired(true)
     );
 
-export const forgedRollCommand = (subcommand: SlashCommandSubcommandBuilder) =>
+export const forgedCommand = (subcommand: SlashCommandSubcommandBuilder) =>
   subcommand
     .setName("forged")
     .setDescription("Rolls a Forged in the Dark roll.")
@@ -33,7 +33,7 @@ export const forgedRollCommand = (subcommand: SlashCommandSubcommandBuilder) =>
           { name: "action", value: "action" },
           { name: "resistance", value: "resist" },
           { name: "fortune/downtime", value: "fortune" },
-          { name: "clear stress", value: "clearStress" }
+          { name: "clear stress", value: "clear" }
         )
     )
     .addIntegerOption((option) =>
@@ -43,7 +43,7 @@ export const forgedRollCommand = (subcommand: SlashCommandSubcommandBuilder) =>
         .setRequired(true)
     );
 
-export const sbrRollCommand = (
+export const sbrCommand = (
   subcommandGroup: SlashCommandSubcommandGroupBuilder
 ) =>
   subcommandGroup
@@ -66,7 +66,7 @@ export const sbrRollCommand = (
         .setDescription("Rolls a Sparked by resistance fallout test.")
     );
 
-export const pbtaRollCommand = (subcommand: SlashCommandSubcommandBuilder) =>
+export const pbtaCommand = (subcommand: SlashCommandSubcommandBuilder) =>
   subcommand
     .setName("pbta")
     .setDescription("Rolls a Powered by the Apocalypse move.")

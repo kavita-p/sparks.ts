@@ -1,16 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const rollDice = (count, sides) => {
-    const results = {
-        max: 0,
-        rolls: [],
-        min: 0,
-    };
+    const dice = [];
     for (let i = 0; i < count; i++) {
-        results.rolls.push(Math.floor(sides * Math.random() + 1));
+        dice.push(Math.floor(sides * Math.random() + 1));
     }
-    results.max = Math.max(...results.rolls);
-    results.min = Math.min(...results.rolls);
-    return results;
+    return {
+        max: Math.max(...dice),
+        min: Math.min(...dice),
+        dice,
+    };
 };
 exports.default = rollDice;

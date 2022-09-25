@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,89 +31,80 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.execute = exports.data = void 0;
 //builders
 const discord_js_1 = require("discord.js");
-const response_1 = __importDefault(require("../utils/response"));
+const lib_1 = require("../utils/lib");
 //various dice-based roll utilities
-const rollDice_1 = __importDefault(require("../utils/rollDice"));
-const sbrDice_1 = require("../utils/sbrDice");
-const forgedDice_1 = require("../utils/forgedDice");
-const pbtaDice_1 = require("../utils/pbtaDice");
+const interpreters = __importStar(require("../interpreters/interpreter"));
 //commands
-const rollCommandBuilders_1 = require("../utils/rollCommandBuilders");
+const inputs = __importStar(require("../utils/rollCommandBuilders"));
 exports.data = new discord_js_1.SlashCommandBuilder()
     .setName("roll")
     .setDescription("Rolls dice")
-    .addSubcommandGroup(rollCommandBuilders_1.sbrRollCommand)
-    .addSubcommand(rollCommandBuilders_1.forgedRollCommand)
-    .addSubcommand(rollCommandBuilders_1.customRollCommand)
-    .addSubcommand(rollCommandBuilders_1.pbtaRollCommand);
+    .addSubcommandGroup(inputs.sbrCommand)
+    .addSubcommand(inputs.forgedCommand)
+    .addSubcommand(inputs.customRollCommand)
+    .addSubcommand(inputs.pbtaCommand);
 const execute = (interaction) => __awaiter(void 0, void 0, void 0, function* () {
     if (!interaction.isRepliable || !interaction.isChatInputCommand())
         return;
     const rollType = interaction.options.getSubcommandGroup() ||
         interaction.options.getSubcommand();
-    let response = new response_1.default();
+    let response = {
+        title: "Command error!",
+        description: "Some kind of command error has occurred. Please post a comment on Sparks' itch.io page if you encounter this message with as much information as you can provide about the command that produced this result!",
+        status: lib_1.RollStatus.Failure,
+        dice: [],
+    };
     switch (rollType) {
         case "custom": {
             const count = interaction.options.getInteger("count");
             const sides = interaction.options.getInteger("sides");
             if (!count || !sides)
                 return;
-            const dice = (0, rollDice_1.default)(count, sides);
-            response.title = dice.max.toString();
-            response.description += `Rolled ${count}d${sides} (max: ${dice.max}, min: ${dice.min}).`;
-            response.dice = dice.rolls;
-            response.status = "full";
+            let rolls = (0, lib_1.rollDice)(count, sides);
+            response = interpreters.customRoll(rolls, count, sides);
             break;
         }
         case "sbr": {
             if (interaction.options.getSubcommand() === "fallout") {
-                response = (0, sbrDice_1.falloutTest)();
+                response = interpreters.falloutTest((0, lib_1.rollDice)(1, 12));
             }
             else if (interaction.options.getSubcommand() === "check") {
                 const pool = interaction.options.getInteger("pool");
                 if (!pool)
                     return;
-                response = (0, sbrDice_1.skillCheck)(pool);
+                const [zeroD, rolls] = pool === 0 ? [true, (0, lib_1.rollDice)(1, 12)] : [false, (0, lib_1.rollDice)(pool, 12)];
+                response = interpreters.skillCheck(rolls, zeroD);
             }
             break;
         }
         case "forged": {
             const pool = interaction.options.getInteger("pool");
-            const rollType = interaction.options.getString("type");
-            if (!rollType || !pool)
+            const rollTypeKey = interaction.options.getString("type");
+            if (!rollTypeKey || !pool)
                 return;
-            const rollFunctions = {
-                action: forgedDice_1.actionRoll,
-                resist: forgedDice_1.resistanceRoll,
-                fortune: forgedDice_1.fortuneRoll,
-                clearStress: forgedDice_1.clearStress,
-            };
-            response = rollFunctions[rollType](pool);
+            const rollType = lib_1.ForgedType[rollTypeKey];
+            const rolls = pool === 0 ? (0, lib_1.rollDice)(2, 6) : (0, lib_1.rollDice)(pool, 6);
+            response = interpreters.forgedDice(rolls, rollType, pool === 0);
             break;
         }
         case "pbta": {
             const stat = interaction.options.getInteger("stat");
             if (!stat)
                 return;
-            response = (0, pbtaDice_1.pbtaRoll)(stat);
+            let rolls = (0, lib_1.rollDice)(2, 6);
+            response = interpreters.pbtaMove(rolls, stat);
             break;
         }
     }
-    if (response.description.length === 0)
-        response.description = "Placeholder!";
     const colors = {
-        critfail: "DarkRed",
-        fail: "Red",
-        mixed: "Gold",
-        full: "Green",
-        crit: "Aqua",
+        [lib_1.RollStatus.Failure]: "Red",
+        [lib_1.RollStatus.Mixed]: "Gold",
+        [lib_1.RollStatus.Full]: "Green",
+        [lib_1.RollStatus.Crit]: "Aqua",
     };
     const embed = new discord_js_1.EmbedBuilder()
         .setTitle(response.title)

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.forgedDice = void 0;
-const lib_1 = require("../lib");
+const lib_1 = require("../utils/lib");
 const forgedDice = (rolls, rollType, zeroD) => {
     const sixes = rolls.dice.filter((d) => d === 6).length;
     const pool = zeroD ? 0 : rolls.dice.length;
