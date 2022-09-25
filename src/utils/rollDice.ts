@@ -1,6 +1,5 @@
 const rollDice = (count: number, sides: number) => {
-  let results: { max: number; rolls: number[]; min: number };
-  results = {
+  const results: { max: number; rolls: number[]; min: number } = {
     max: 0,
     rolls: [],
     min: 0,

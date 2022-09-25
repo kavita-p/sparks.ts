@@ -1,36 +1,45 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
+const fs = require("fs");
+const path = require("path");
 const discord_js_1 = require("discord.js");
 const config_json_1 = require("./config.json");
-console.log("Morning! Waking up...");
-const client = new discord_js_1.Client({ intents: [discord_js_1.GatewayIntentBits.Guilds] });
-const commands = new discord_js_1.Collection();
-const commandsPath = path_1.default.join(__dirname, "commands");
-const commandFiles = fs_1.default
-    .readdirSync(commandsPath)
-    .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
-for (const file of commandFiles) {
-    const filePath = path_1.default.join(commandsPath, file);
-    const command = require(filePath);
-    commands.set(command.data.name, command);
-}
-const eventsPath = path_1.default.join(__dirname, "events");
-const eventFiles = fs_1.default
-    .readdirSync(eventsPath)
-    .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
-for (const file of eventFiles) {
-    const filePath = path_1.default.join(eventsPath, file);
-    const event = require(filePath);
-    if (event.once) {
-        client.once(event.name, (...args) => event.execute(...args));
+const launch = () => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("Morning! Waking up...");
+    const client = new discord_js_1.Client({ intents: [discord_js_1.GatewayIntentBits.Guilds] });
+    const commands = new discord_js_1.Collection();
+    const commandsPath = path.join(__dirname, "commands");
+    const commandFiles = fs
+        .readdirSync(commandsPath)
+        .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
+    for (const file of commandFiles) {
+        const filePath = path.join(commandsPath, file);
+        const command = yield Promise.resolve().then(() => require(filePath));
+        commands.set(command.data.name, command);
     }
-    else {
-        client.on(event.name, (...args) => event.execute(commands, ...args));
+    const eventsPath = path.join(__dirname, "events");
+    const eventFiles = fs
+        .readdirSync(eventsPath)
+        .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
+    for (const file of eventFiles) {
+        const filePath = path.join(eventsPath, file);
+        const event = yield Promise.resolve().then(() => require(filePath));
+        if (event.once) {
+            client.once(event.name, (...args) => event.execute(...args));
+        }
+        else {
+            client.on(event.name, (...args) => event.execute(commands, ...args));
+        }
     }
-}
-client.login(config_json_1.token);
+    client.login(config_json_1.token);
+});
+launch();

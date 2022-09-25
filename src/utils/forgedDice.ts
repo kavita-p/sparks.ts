@@ -2,19 +2,19 @@ import rollDice from "./rollDice";
 import RollResponse from "./response";
 
 const rollForgedDice = (pool: number) => {
-  let zD = pool <= 0;
-  let dice = rollDice(zD ? 2 : pool, 6);
+  const zD = pool <= 0;
+  const dice = rollDice(zD ? 2 : pool, 6);
   let sixes = 0;
   dice.rolls.forEach((roll) => {
     if (roll === 6) sixes++;
   });
-  let score = zD ? dice.min : dice.max;
+  const score = zD ? dice.min : dice.max;
   return { score, rolls: dice.rolls, zD, isCrit: sixes >= 2, sixes };
 };
 
 export const actionRoll = (pool: number) => {
-  let { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
-  let response = new RollResponse();
+  const { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
+  const response = new RollResponse();
 
   if (isCrit) {
     response.title = "Critical success!";
@@ -49,9 +49,9 @@ export const actionRoll = (pool: number) => {
 };
 
 export const fortuneRoll = (pool: number) => {
-  let { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
+  const { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
 
-  let response = new RollResponse();
+  const response = new RollResponse();
 
   if (isCrit) {
     response.title = "Critical!";
@@ -87,8 +87,8 @@ export const fortuneRoll = (pool: number) => {
 };
 
 export const resistanceRoll = (pool: number) => {
-  let { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
-  let response = new RollResponse();
+  const { score, rolls, zD, isCrit, sixes } = rollForgedDice(pool);
+  const response = new RollResponse();
 
   if (isCrit) {
     response.title = "Clear 1 stress!";
@@ -108,8 +108,8 @@ export const resistanceRoll = (pool: number) => {
 };
 
 export const clearStress = (pool: number) => {
-  let { score, rolls, zD } = rollForgedDice(pool);
-  let response = new RollResponse();
+  const { score, rolls, zD } = rollForgedDice(pool);
+  const response = new RollResponse();
   response.title = `Clear **${score}** stress.`;
   response.description = `${
     zD ? "(Rolled as the lowest of 2d.)\n\n" : ""

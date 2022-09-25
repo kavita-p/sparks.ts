@@ -1,15 +1,12 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.pbtaRoll = void 0;
-const rollDice_1 = __importDefault(require("./rollDice"));
-const response_1 = __importDefault(require("./response"));
+const rollDice_1 = require("./rollDice");
+const response_1 = require("./response");
 const pbtaRoll = (stat) => {
-    let dice = (0, rollDice_1.default)(2, 6);
-    let score = dice.rolls[0] + dice.rolls[1] + stat;
-    let response = new response_1.default();
+    const dice = (0, rollDice_1.default)(2, 6);
+    const score = dice.rolls[0] + dice.rolls[1] + stat;
+    const response = new response_1.default();
     if (score >= 12) {
         response.title = "Full success!";
         response.status = "crit";

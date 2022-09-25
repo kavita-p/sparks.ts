@@ -2,15 +2,15 @@ import rollDice from "./rollDice";
 import RollResponse from "./response";
 
 export const skillCheck = (pool: number) => {
-  let zeroDice: Boolean = false;
+  let zeroDice = false;
   if (pool <= 0) {
     pool = 1;
     zeroDice = true;
   }
-  let dice = rollDice(pool, 10);
-  let response = new RollResponse();
+  const dice = rollDice(pool, 10);
+  const response = new RollResponse();
 
-  let successTable = [
+  const successTable = [
     { title: "Critical success", status: "crit" },
     { title: "Clean success", status: "full" },
     { title: "Strained success", status: "mixed" },
@@ -18,7 +18,7 @@ export const skillCheck = (pool: number) => {
     { title: "Critical failure", status: "critfail" },
   ];
 
-  let i: number;
+  let i = 0;
 
   switch (dice.max) {
     case 10:
@@ -73,8 +73,8 @@ export const skillCheck = (pool: number) => {
 };
 
 export const falloutTest = () => {
-  let die = rollDice(1, 12);
-  let response = new RollResponse();
+  const die = rollDice(1, 12);
+  const response = new RollResponse();
   response.title += `Rolled ${die.max.toString()} to test for fallout.`;
   response.description = `Take **${
     die.max > 6 ? "major" : "minor"

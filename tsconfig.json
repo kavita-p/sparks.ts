@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
     "outDir": "./build",
-    "allowJs": true,
-    "target": "ES2017",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "resolveJsonModule": true
+    "target": "ES2015",
+    "module": "CommonJS",
+    "resolveJsonModule": true,
+    "strict": true
   },
   "include": ["./src/**/*"],
-  "exclude": ["./yarn/*"]
+  "exclude": ["node_modules"]
 }

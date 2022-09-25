@@ -4,6 +4,7 @@ class RollResponse {
     constructor() {
         this.title = "";
         this.description = "";
+        this.dice = [];
         this.status = "";
     }
 }
