@@ -1,6 +1,6 @@
 import { SlashCommandBuilder, Interaction, EmbedBuilder } from "discord.js";
-import fs from "fs";
-import path from "path";
+import * as fs from "fs";
+import * as path from "path";
 
 export const data = new SlashCommandBuilder()
   .setName("sparks-help")
@@ -9,11 +9,11 @@ export const data = new SlashCommandBuilder()
 export const execute = async (interaction: Interaction) => {
   if (!interaction.isRepliable()) return;
 
-  let helpPath = path.join(__dirname, "..", "..", "help-text.md");
+  const helpPath = path.join(__dirname, "..", "..", "help-text.md");
 
-  let helpText = fs.readFileSync(helpPath, "utf8");
+  const helpText = fs.readFileSync(helpPath, "utf8");
 
-  let embed = new EmbedBuilder()
+  const embed = new EmbedBuilder()
     .setTitle("Info")
     .setDescription(helpText)
     .addFields({ name: "Author", value: "kavita#7223" })

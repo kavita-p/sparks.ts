@@ -1,86 +1,85 @@
 //builders
-import { Interaction, SlashCommandBuilder, EmbedBuilder } from "discord.js";
-import RollResponse from "../utils/response";
+import {
+  Interaction,
+  SlashCommandBuilder,
+  EmbedBuilder,
+  ColorResolvable,
+} from "discord.js";
+import { rollDice, RollResponse, ForgedType, RollStatus } from "../utils/lib";
 //various dice-based roll utilities
-import rollDice from "../utils/rollDice";
-import { skillCheck, falloutTest } from "../utils/sbrDice";
-import {
-  actionRoll,
-  fortuneRoll,
-  resistanceRoll,
-  clearStress,
-} from "../utils/forgedDice";
+import * as interpreters from "../interpreters/interpreter";
 //commands
-import {
-  sbrRollCommand,
-  forgedRollCommand,
-  customRollCommand,
-  pbtaRollCommand,
-} from "../utils/rollCommandBuilders";
-import { pbtaRoll } from "../utils/pbtaDice";
+import * as inputs from "../utils/rollCommandBuilders";
 
 export const data = new SlashCommandBuilder()
   .setName("roll")
   .setDescription("Rolls dice")
-  .addSubcommandGroup(sbrRollCommand)
-  .addSubcommand(forgedRollCommand)
-  .addSubcommand(customRollCommand)
-  .addSubcommand(pbtaRollCommand);
+  .addSubcommandGroup(inputs.sbrCommand)
+  .addSubcommand(inputs.forgedCommand)
+  .addSubcommand(inputs.customRollCommand)
+  .addSubcommand(inputs.pbtaCommand);
 
 export const execute = async (interaction: Interaction) => {
   if (!interaction.isRepliable || !interaction.isChatInputCommand()) return;
-  let rollType =
+  const rollType =
     interaction.options.getSubcommandGroup() ||
     interaction.options.getSubcommand();
-  let response = new RollResponse();
+
+  let response: RollResponse = {
+    title: "Command error!",
+    description:
+      "Some kind of command error has occurred. Please post a comment on Sparks' itch.io page if you encounter this message with as much information as you can provide about the command that produced this result!",
+    status: RollStatus.Failure,
+    dice: [],
+  };
+
   switch (rollType) {
     case "custom": {
-      let count = interaction.options.getInteger("count");
-      let sides = interaction.options.getInteger("sides");
-      let dice = rollDice(count, sides);
-      response.title = dice.max.toString();
-      response.description += `Rolled ${count}d${sides} (max: ${dice.max}, min: ${dice.min}).`;
-      response.dice = dice.rolls;
-      response.status = "full";
+      const count = interaction.options.getInteger("count");
+      const sides = interaction.options.getInteger("sides");
+      if (!count || !sides) return;
+      let rolls = rollDice(count, sides);
+      response = interpreters.customRoll(rolls, count, sides);
       break;
     }
     case "sbr": {
       if (interaction.options.getSubcommand() === "fallout") {
-        response = falloutTest();
+        response = interpreters.falloutTest(rollDice(1, 12));
       } else if (interaction.options.getSubcommand() === "check") {
-        response = skillCheck(interaction.options.getInteger("pool"));
+        const pool = interaction.options.getInteger("pool");
+        if (!pool) return;
+        const [zeroD, rolls] =
+          pool === 0 ? [true, rollDice(1, 12)] : [false, rollDice(pool, 12)];
+        response = interpreters.skillCheck(rolls, zeroD);
       }
       break;
     }
     case "forged": {
-      let pool = interaction.options.getInteger("pool");
-      let rollFunctions = {
-        action: actionRoll,
-        resist: resistanceRoll,
-        fortune: fortuneRoll,
-        clearStress: clearStress,
-      };
-      let rollType = interaction.options.getString("type");
-      response = rollFunctions[rollType](pool);
+      const pool = interaction.options.getInteger("pool");
+      const rollTypeKey = interaction.options.getString("type");
+      if (!rollTypeKey || !pool) return;
+      const rollType = rollTypeKey as ForgedType;
+      const rolls = pool === 0 ? rollDice(2, 6) : rollDice(pool, 6);
+      response = interpreters.forgedDice(rolls, rollType, pool === 0);
       break;
     }
     case "pbta": {
-      let stat = interaction.options.getInteger("stat");
-      response = pbtaRoll(stat);
+      const stat = interaction.options.getInteger("stat");
+      if (!stat) return;
+      let rolls = rollDice(2, 6);
+      response = interpreters.pbtaMove(rolls, stat);
       break;
     }
   }
-  if (response.description.length === 0) response.description = "Placeholder!";
 
-  let colors = {
-    critfail: "DarkRed",
-    fail: "Red",
-    mixed: "Gold",
-    full: "Green",
-    crit: "Aqua",
+  const colors: { [key in RollStatus]: ColorResolvable } = {
+    [RollStatus.Failure]: "Red",
+    [RollStatus.Mixed]: "Gold",
+    [RollStatus.Full]: "Green",
+    [RollStatus.Crit]: "Aqua",
   };
 
-  let embed = new EmbedBuilder()
+  const embed = new EmbedBuilder()
     .setTitle(response.title)
     .setDescription(response.description)
     .addFields({ name: "Rolls", value: response.dice.join(", ") })
