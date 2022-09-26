@@ -4,7 +4,9 @@
   "author": "Kavita Poduri kavi.pdri@gmail.com (http://github.com/yrgirlkv)",
   "dependencies": {
     "@discordjs/rest": "^1.0.1",
-    "discord.js": "^14.1.1"
+    "discord.js": "^14.1.1",
+    "typescript": "^4.7.4",
+    "@types/node": "^18.6.3"
   },
   "main": "src/index.ts",
   "scripts": {
@@ -17,7 +19,6 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@types/node": "^18.6.3",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "concurrently": "^7.3.0",
@@ -26,8 +27,7 @@
     "husky": "^8.0.1",
     "nodemon": "^2.0.19",
     "prettier": "2.7.1",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.7.4"
+    "ts-node": "^10.9.1"
   },
   "eslintConfig": {
     "extends": [
