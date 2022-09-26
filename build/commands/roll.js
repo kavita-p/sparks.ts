@@ -86,7 +86,7 @@ const execute = (interaction) => __awaiter(void 0, void 0, void 0, function* () 
             const rollTypeKey = interaction.options.getString("type");
             if (!rollTypeKey || !pool)
                 return;
-            const rollType = lib_1.ForgedType[rollTypeKey];
+            const rollType = rollTypeKey;
             const rolls = pool === 0 ? (0, lib_1.rollDice)(2, 6) : (0, lib_1.rollDice)(pool, 6);
             response = interpreters.forgedDice(rolls, rollType, pool === 0);
             break;

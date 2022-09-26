@@ -28,7 +28,7 @@ export const forgedDice = (
         ? RollStatus.Crit
         : RollStatus.Full
       : (() => {
-          return score > 6
+          return score > 5
             ? RollStatus.Full
             : score > 3
             ? RollStatus.Mixed

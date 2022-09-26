@@ -17,7 +17,7 @@ const forgedDice = (rolls, rollType, zeroD) => {
             ? lib_1.RollStatus.Crit
             : lib_1.RollStatus.Full
         : (() => {
-            return score > 6
+            return score > 5
                 ? lib_1.RollStatus.Full
                 : score > 3
                     ? lib_1.RollStatus.Mixed
