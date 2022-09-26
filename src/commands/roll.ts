@@ -58,7 +58,7 @@ export const execute = async (interaction: Interaction) => {
       const pool = interaction.options.getInteger("pool");
       const rollTypeKey = interaction.options.getString("type");
       if (!rollTypeKey || !pool) return;
-      const rollType = ForgedType[rollTypeKey as keyof typeof ForgedType];
+      const rollType = rollTypeKey as ForgedType;
       const rolls = pool === 0 ? rollDice(2, 6) : rollDice(pool, 6);
       response = interpreters.forgedDice(rolls, rollType, pool === 0);
       break;
