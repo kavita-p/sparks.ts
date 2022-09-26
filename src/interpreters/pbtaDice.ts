@@ -34,7 +34,7 @@ export const pbtaMove = (rolls: Rolls, stat: number): RollResponse => {
     }
   })();
 
-  const description = ` Got **${score}** on 2d6${
+  const description = `Got **${score}** on 2d6${
     stat > 0 ? ` + ${stat}` : stat < 0 ? ` - ${Math.abs(stat)}` : ""
   }.${
     score >= 12

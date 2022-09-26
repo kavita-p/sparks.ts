@@ -52,7 +52,7 @@
     }
   },
   "eslintIgnore": [
-    "build/*",
+    "build/",
     "node_modules/"
   ]
 }
