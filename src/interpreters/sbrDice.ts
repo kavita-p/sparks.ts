@@ -6,7 +6,7 @@ import {
 } from "../utils/lib";
 
 export const skillCheck = (rolls: Rolls, zeroD: boolean): RollResponse => {
-  let score = rolls.max;
+  const score = rolls.max;
 
   const status = zeroD
     ? RollStatus.Mixed

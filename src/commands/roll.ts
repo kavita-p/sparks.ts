@@ -38,7 +38,7 @@ export const execute = async (interaction: Interaction) => {
       const count = interaction.options.getInteger("count");
       const sides = interaction.options.getInteger("sides");
       if (!count || !sides) return;
-      let rolls = rollDice(count, sides);
+      const rolls = rollDice(count, sides);
       response = interpreters.customRoll(rolls, count, sides);
       break;
     }
@@ -66,7 +66,7 @@ export const execute = async (interaction: Interaction) => {
     case "pbta": {
       const stat = interaction.options.getInteger("stat");
       if (!stat) return;
-      let rolls = rollDice(2, 6);
+      const rolls = rollDice(2, 6);
       response = interpreters.pbtaMove(rolls, stat);
       break;
     }
