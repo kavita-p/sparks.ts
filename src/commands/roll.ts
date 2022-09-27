@@ -49,7 +49,7 @@ export const execute = async (interaction: Interaction) => {
         const pool = interaction.options.getInteger("pool");
         if (!pool) return;
         const [zeroD, rolls] =
-          pool === 0 ? [true, rollDice(1, 12)] : [false, rollDice(pool, 12)];
+          pool === 0 ? [true, rollDice(1, 10)] : [false, rollDice(pool, 10)];
         response = interpreters.skillCheck(rolls, zeroD);
       }
       break;
