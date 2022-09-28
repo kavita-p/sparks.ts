@@ -37,8 +37,23 @@ export const execute = async (interaction: Interaction) => {
     case "custom": {
       const count = interaction.options.getInteger("count");
       const sides = interaction.options.getInteger("sides");
-      if (!count || !sides) return;
-      const rolls = rollDice(count, sides);
+      if (
+        count === null ||
+        count === undefined ||
+        sides === null ||
+        sides === undefined
+      )
+        return;
+      let rolls;
+      if (count <= 0 || sides <= 0) {
+        rolls = {
+          max: 0,
+          min: 0,
+          dice: [],
+        };
+      } else {
+        rolls = rollDice(count, sides);
+      }
       response = interpreters.customRoll(rolls, count, sides);
       break;
     }
@@ -47,25 +62,29 @@ export const execute = async (interaction: Interaction) => {
         response = interpreters.falloutTest(rollDice(1, 12));
       } else if (interaction.options.getSubcommand() === "check") {
         const pool = interaction.options.getInteger("pool");
-        if (!pool && pool !== 0) return;
-        const [zeroD, rolls] =
-          pool === 0 ? [true, rollDice(1, 10)] : [false, rollDice(pool, 10)];
-        response = interpreters.skillCheck(rolls, zeroD);
+        if (pool === null || pool === undefined) return;
+        const rolls = pool === 0 ? rollDice(1, 10) : rollDice(pool, 10);
+        response = interpreters.skillCheck(rolls, pool === 0);
       }
       break;
     }
     case "forged": {
       const pool = interaction.options.getInteger("pool");
-      const rollTypeKey = interaction.options.getString("type");
-      if (!rollTypeKey || !pool) return;
-      const rollType = rollTypeKey as ForgedType;
+      const rollType = interaction.options.getString("type") as ForgedType;
+      if (
+        rollType === null ||
+        rollType === undefined ||
+        pool === null ||
+        pool === undefined
+      )
+        return;
       const rolls = pool === 0 ? rollDice(2, 6) : rollDice(pool, 6);
       response = interpreters.forgedDice(rolls, rollType, pool === 0);
       break;
     }
     case "pbta": {
       const stat = interaction.options.getInteger("stat");
-      if (!stat) return;
+      if (stat === null || stat === undefined) return;
       const rolls = rollDice(2, 6);
       response = interpreters.pbtaMove(rolls, stat);
       break;
@@ -82,7 +101,13 @@ export const execute = async (interaction: Interaction) => {
   const embed = new EmbedBuilder()
     .setTitle(response.title)
     .setDescription(response.description)
-    .addFields({ name: "Rolls", value: response.dice.join(", ") })
     .setColor(colors[response.status]);
+
+  if (response.dice.length >= 1) {
+    embed.addFields({
+      name: "Rolls",
+      value: response.dice.join(", "),
+    });
+  }
   await interaction.reply({ embeds: [embed] });
 };

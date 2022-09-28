@@ -12,12 +12,14 @@ export const customRollCommand = (subcommand: SlashCommandSubcommandBuilder) =>
         .setName("count")
         .setDescription("The number of dice you'd like to roll.")
         .setRequired(true)
+        .setMinValue(0)
     )
     .addIntegerOption((option) =>
       option
         .setName("sides")
         .setDescription("The number of sides each die should have.")
         .setRequired(true)
+        .setMinValue(0)
     );
 
 export const forgedCommand = (subcommand: SlashCommandSubcommandBuilder) =>
@@ -41,6 +43,7 @@ export const forgedCommand = (subcommand: SlashCommandSubcommandBuilder) =>
         .setName("pool")
         .setDescription("The size of your dice pool.")
         .setRequired(true)
+        .setMinValue(0)
     );
 
 export const sbrCommand = (
@@ -58,6 +61,7 @@ export const sbrCommand = (
             .setName("pool")
             .setDescription("The size of your dice pool.")
             .setRequired(true)
+            .setMinValue(0)
         )
     )
     .addSubcommand((subcommand) =>
