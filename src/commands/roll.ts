@@ -47,7 +47,7 @@ export const execute = async (interaction: Interaction) => {
         response = interpreters.falloutTest(rollDice(1, 12));
       } else if (interaction.options.getSubcommand() === "check") {
         const pool = interaction.options.getInteger("pool");
-        if (!pool) return;
+        if (!pool && pool !== 0) return;
         const [zeroD, rolls] =
           pool === 0 ? [true, rollDice(1, 10)] : [false, rollDice(pool, 10)];
         response = interpreters.skillCheck(rolls, zeroD);

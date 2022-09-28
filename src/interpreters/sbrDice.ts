@@ -19,7 +19,7 @@ export const skillCheck = (rolls: Rolls, zeroD: boolean): RollResponse => {
     : RollStatus.Failure;
 
   const title = zeroD
-    ? `Rolled ${rolls.max} on ${rolls.dice.length}d10.`
+    ? `Got ${rolls.max} on 0d10 (rolled as ${rolls.dice.length}d10.)`
     : rolls.max === 1
     ? "Critical failure!"
     : (() => {
@@ -38,7 +38,7 @@ export const skillCheck = (rolls: Rolls, zeroD: boolean): RollResponse => {
       })();
 
   const description = zeroD
-    ? "Each Sparked by Resistance system handles its rolls differently. You should consult the rules for your particular game to interpret these results. You can use `/roll custom` if you need additional dice."
+    ? "You've asked for a 0d roll! Each Sparked by Resistance system handles these rolls differently. You should consult the rules for your particular game to interpret these results. You can use `/roll custom` if you need additional dice."
     : `Rolled ${rolls.max} on ${rolls.dice.length}d10.`;
 
   return {
