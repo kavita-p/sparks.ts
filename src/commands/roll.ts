@@ -5,8 +5,8 @@ import {
   EmbedBuilder,
   ColorResolvable,
 } from "discord.js";
-import { rollDice, RollResponse, ForgedType, RollStatus } from "../utils/lib";
 //various dice-based roll utilities
+import { rollDice, RollResponse, ForgedType, RollStatus } from "../utils/lib";
 import * as interpreters from "../interpreters/interpreter";
 //commands
 import * as inputs from "../utils/rollCommandBuilders";
@@ -97,6 +97,13 @@ export const execute = async (interaction: Interaction) => {
     [RollStatus.Full]: "Green",
     [RollStatus.Crit]: "Aqua",
   };
+
+  if (response.title === "" || response.description === "") {
+    response.title = "Error!";
+    response.description =
+      "Error rendering response. If you see this, please report this bug and the command you issued on Sparks' itch.io page, https://yrgirlkv.itch.io/sparks.";
+    response.status = RollStatus.Failure;
+  }
 
   const embed = new EmbedBuilder()
     .setTitle(response.title)
