@@ -82,3 +82,40 @@ export const pbtaCommand = (subcommand: SlashCommandSubcommandBuilder) =>
         )
         .setRequired(true)
     );
+
+    export const wildCommand = (subcommand: SlashCommandSubcommandBuilder) =>
+    subcommand    
+        .setName("wild")
+        .setDescription("Rolls a Wild Words roll.")
+        .addStringOption((option) =>
+        option
+            .setName("type")
+            .setDescription("The type of roll you'd like to make.")
+            .setRequired(true)
+            .addChoices(
+                { name: "action", value: "action"},
+                { name: "attack", value: "attack"},
+                { name: "defense", value: "defense"},
+                { name: "acquisition", value: "acquisition"},
+                { name: "creation", value: "creation"},
+                { name: "recovery", value: "recovery"},
+                { name: "ratings", value: "ratings"},
+                { name: "watch", value: "watch"},
+                { name: "weather-watching", value: "weather"}
+            )
+          )
+          .addIntegerOption((option) =>
+          option
+            .setName("pool")
+            .setDescription("The size of your dice pool.")
+            .setRequired(true)
+            .setMinValue(0)
+          )
+  
+          .addIntegerOption((option) =>
+          option
+            .setName("cut")
+            .setDescription("The number of dice to cut from the result pool")
+            .setRequired(false)
+        ); 
+      

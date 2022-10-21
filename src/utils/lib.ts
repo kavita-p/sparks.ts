@@ -12,6 +12,18 @@ export enum ForgedType {
   Clear = "clear",
 }
 
+export enum WildType {
+  Action = "action",
+  Attack = "attack",
+  Defense = "defense",
+  Acquisition = "acquisition",
+  Creation = "creation",
+  Recovery = "recovery",
+  Ratings = "ratings",
+  Watch = "watch",
+  Weather = "weather"
+}
+
 export interface RollResponse {
   title: string;
   description: string;
