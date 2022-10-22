@@ -93,15 +93,15 @@ export const pbtaCommand = (subcommand: SlashCommandSubcommandBuilder) =>
             .setDescription("The type of roll you'd like to make.")
             .setRequired(true)
             .addChoices(
-                { name: "action", value: "action"},
-                { name: "attack", value: "attack"},
-                { name: "defense", value: "defense"},
-                { name: "acquisition", value: "acquisition"},
-                { name: "creation", value: "creation"},
-                { name: "recovery", value: "recovery"},
-                { name: "ratings", value: "ratings"},
-                { name: "watch", value: "watch"},
-                { name: "weather-watching", value: "weather"}
+                { name: "Action", value: "action"},
+                { name: "Attack", value: "attack"},
+                { name: "Defense", value: "defense"},
+                { name: "Acquisition", value: "acquisition"},
+                { name: "Creation", value: "creation"},
+                { name: "Recovery", value: "recovery"},
+                { name: "Ratings", value: "ratings"},
+                { name: "Watch", value: "watch"},
+                { name: "Weather-watching", value: "weather"}
             )
           )
           .addIntegerOption((option) =>
@@ -110,12 +110,15 @@ export const pbtaCommand = (subcommand: SlashCommandSubcommandBuilder) =>
             .setDescription("The size of your dice pool.")
             .setRequired(true)
             .setMinValue(0)
+            .setMaxValue(6)
           )
   
           .addIntegerOption((option) =>
           option
             .setName("cut")
-            .setDescription("The number of dice to cut from the result pool")
+            .setDescription("The number of results to remove from the result pool, starting from the highest.")
             .setRequired(false)
+            .setMinValue(0)
+            .setMaxValue(6)
         ); 
       

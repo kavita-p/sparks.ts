@@ -21,7 +21,7 @@ export enum WildType {
   Recovery = "recovery",
   Ratings = "ratings",
   Watch = "watch",
-  Weather = "weather"
+  Weather = "weather",
 }
 
 export interface RollResponse {
