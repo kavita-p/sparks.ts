@@ -11,7 +11,7 @@ export const wildDice = (
   rolls: Rolls,
   rollType: WildType,
   zeroD: boolean,
-  cut: number
+  cut?: number
 ): RollResponse => {
 
     const pool = zeroD ? 0 : rolls.dice.length;

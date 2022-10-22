@@ -93,14 +93,12 @@ export const execute = async (interaction: Interaction) => {
     case "wild": {
       const pool = interaction.options.getInteger("pool");
       const rollType = interaction.options.getString("type") as WildType;
-      const cut = interaction.options.getInteger("cut");
+      const cut = interaction.options.getInteger("cut") as number;
       if (
         rollType === null ||
         rollType === undefined ||
         pool === null ||
-        pool === undefined ||
-        cut === null ||
-        cut === undefined
+        pool === undefined
       )
         return;
         const rolls = pool === 0 ? rollDice(1,6) : rollDice(pool,6);
