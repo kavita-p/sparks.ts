@@ -93,15 +93,15 @@ export const pbtaCommand = (subcommand: SlashCommandSubcommandBuilder) =>
             .setDescription("The type of roll you'd like to make.")
             .setRequired(true)
             .addChoices(
-                { name: "Action", value: "action"},
-                { name: "Attack", value: "attack"},
-                { name: "Defense", value: "defense"},
-                { name: "Acquisition", value: "acquisition"},
-                { name: "Creation", value: "creation"},
-                { name: "Recovery", value: "recovery"},
-                { name: "Ratings", value: "ratings"},
-                { name: "Watch", value: "watch"},
-                { name: "Weather-watching", value: "weather"}
+                { name: "Action", value: "Action"},
+                { name: "Attack", value: "Attack"},
+                { name: "Defense", value: "Defense"},
+                { name: "Resource", value: "Resource"},
+                { name: "Creation", value: "Creation"},
+                { name: "Recovery", value: "Recovery"},
+                { name: "Ratings", value: "Ratings"},
+                { name: "Watch", value: "Watch"},
+                { name: "Weather-watching", value: "Weather-watching"}
             )
           )
           .addIntegerOption((option) =>

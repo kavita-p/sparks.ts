@@ -13,15 +13,15 @@ export enum ForgedType {
 }
 
 export enum WildType {
-  Action = "action",
-  Attack = "attack",
-  Defense = "defense",
-  Acquisition = "acquisition",
-  Creation = "creation",
-  Recovery = "recovery",
-  Ratings = "ratings",
-  Watch = "watch",
-  Weather = "weather",
+  Action = "Action",
+  Attack = "Attack",
+  Defense = "Defense",
+  Resource = "Resource",
+  Creation = "Creation",
+  Recovery = "Recovery",
+  Ratings = "Ratings",
+  Watch = "Watch",
+  Weather = "Weather-watching",
 }
 
 export interface RollResponse {
