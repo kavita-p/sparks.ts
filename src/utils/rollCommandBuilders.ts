@@ -96,7 +96,7 @@ export const pbtaCommand = (subcommand: SlashCommandSubcommandBuilder) =>
                 { name: "Action", value: "Action"},
                 { name: "Attack", value: "Attack"},
                 { name: "Defense", value: "Defense"},
-                { name: "Resource", value: "Resource"},
+                { name: "Acquisition", value: "Acquisition"},
                 { name: "Creation", value: "Creation"},
                 { name: "Recovery", value: "Recovery"},
                 { name: "Ratings", value: "Ratings"},

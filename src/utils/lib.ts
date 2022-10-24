@@ -16,7 +16,7 @@ export enum WildType {
   Action = "Action",
   Attack = "Attack",
   Defense = "Defense",
-  Resource = "Resource",
+  Acquisition = "Acquisition",
   Creation = "Creation",
   Recovery = "Recovery",
   Ratings = "Ratings",
