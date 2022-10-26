@@ -45,60 +45,63 @@ export const wildDice = (
         })();
       
     const title = (() => {
+
+      let titleText = `(${rollType}) `;
+
       switch (rollType) {
         case WildType.Watch:
-          return (() => {
+       //   return (() => {
             switch (status) {
               case RollStatus.Full:
-                return `(${rollType}) Peace`;
+                titleText += `Peace`;
+                break;
               case RollStatus.Mixed:
-                return `(${rollType}) Order`;
+                titleText += `Order`;
+                break;
               case RollStatus.Failure:
-                return `(${rollType}) Nature`;
+                titleText += `Nature`;
+                break;
               default:
-                throw new UnreachableCaseError(status);
-            }
-          })();
+                break;
+           }
+          break;
         case WildType.Weather:
-          return (() => {
             switch (status) {
               case RollStatus.Full:
-                return `(${rollType}) Clear Skies`;
+                 titleText += `Clear Skies`;
+                 break;
               case RollStatus.Mixed:
-                return `(${rollType}) Continuation`;
+                 titleText += `Continuation`;
+                 break;
               case RollStatus.Failure:
-                return `(${rollType}) A Change for the Worse`;
+                 titleText += `A Change for the Worse`;
+                 break;
               default:
-                throw new UnreachableCaseError(status);
+                  break;
               }
-            })();
+          break;
         default:
-          return (() => {
             switch (status) {
 
               case RollStatus.Full:
-                return `(${rollType}) Triumph${
-                  doubles ? " with a twist" : ""
-                }!`;
+                 titleText += "Triumph";
+                 break;
 
               case RollStatus.Mixed:
-                return `(${rollType}) Conflict${
-                  doubles ? " with a twist" : ""
-                }!`; 
+                 titleText += "Conflict"; 
+                 break;
                 
               case RollStatus.Failure:
-                return `(${rollType}) Disaster${
-                  doubles ? " with a twist" : ""
-                }!`;
+               titleText += "Disaster";
+               break;
 
-                default:
-                throw new UnreachableCaseError(status);
+              default:
+                break;
               }
-            })();
- 
-      ;}
+          }
 
-    })();
+            return (doubles && ((rollType !== WildType.Watch) && (rollType !== WildType.Weather))) ? titleText += " with a twist!" : titleText += "!";
+      ;})();
 
     const description =
        (() => {
