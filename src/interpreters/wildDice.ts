@@ -264,10 +264,13 @@ export const wildDice = (
               case WildType.Attack:
                 descText += "\n\n**(Twist... or Critical)**\n Unexpected narrative effect/critical with increased impact."
                 break;
+
               case WildType.Defense:
                 descText += "\n\n**(Twist... or Counter)**\n Unexpected narrative effect, or counter with a mark of damage against them (if in range)."  
                 break;
+
               // Watch and Weather-watching rolls don't have twists
+
               case WildType.Watch:
                 break;
 
