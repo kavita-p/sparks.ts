@@ -4,6 +4,8 @@ import {
   WildType,
   RollStatus,
   UnreachableCaseError,
+  compareNumbers,
+  rollDice
 } from "../utils/lib";
   
 export const wildDice = (
@@ -13,26 +15,50 @@ export const wildDice = (
   cut?: number
 ): RollResponse => {
 
-
-  // TODO: cut
-  // TODO: reminder text on 0-dice rolls
-
-    const pool = zeroD ? 0 : rolls.dice.length;
-
-    const doubles: boolean = (() => {
-      // a little space/memory-inefficient, but hopefully not a dealbreaker
-      if (rolls.dice.length !== new Set(rolls.dice).size) {
-        return true;
-      }
-      return false;
-    })();
-
+    // some stuff like cut and twists doesn't apply to Watch and Weather-watching rolls 
+    const specialRoll: boolean = (rollType === WildType.Weather || rollType === WildType.Watch) ? true : false;
+  
     if (cut === undefined || cut === null) cut = 0;
+  
+    let diceToCut: number[] = [...rolls.dice];
+  
+    let cutDice: number[] = [];
+  
+    const overcut: boolean = 
+      cut >= rolls.dice.length
+        ? true
+        : false; 
 
-    const score = rolls.max;
-    
+    const score = (() => {
+      diceToCut.sort(compareNumbers);
+      diceToCut.reverse();
+
+        if (cut > 0 && !specialRoll) {
+              for (let i = 0; i < cut; i++) {
+                cutDice.push(diceToCut[0])
+                diceToCut.shift();
+              }
+              if (overcut) {
+                return rollDice(1,6).max
+              }
+    }
+    return diceToCut[0];
+  })();
+
+  if (diceToCut.length == 0) {
+    diceToCut.push(score) // in case we overcut
+  }
+
+  const doubles: boolean = (() => {
+    // a little space/memory-inefficient, but hopefully not a dealbreaker
+    if (diceToCut.length !== new Set(diceToCut).size) {
+      return true;
+    }
+    return false;
+  })();
+
     const status: RollStatus =
-      zeroD ? score > 3 // with a pool of 0, roll 1d6, and count triumphs as conflicts
+      ((zeroD || overcut) && !specialRoll) ? score > 3 // with a pool of 0, roll 1d6, and count triumphs as conflicts
              ? RollStatus.Mixed
              : RollStatus.Failure
 
@@ -46,11 +72,10 @@ export const wildDice = (
       
     const title = (() => {
 
-      let titleText = `(${rollType}) `;
+      let titleText = `__${rollType}__ [${score}] `;
 
       switch (rollType) {
         case WildType.Watch:
-       //   return (() => {
             switch (status) {
               case RollStatus.Full:
                 titleText += `Peace`;
@@ -100,7 +125,7 @@ export const wildDice = (
               }
           }
 
-            return (doubles && ((rollType !== WildType.Watch) && (rollType !== WildType.Weather))) ? titleText += " with a twist!" : titleText += "!";
+            return (doubles && !specialRoll) ? titleText += " with a twist" : titleText;
       ;})();
 
     const description =
@@ -116,7 +141,7 @@ export const wildDice = (
                   break;
 
                 case RollStatus.Mixed:
-                  descText += "Success with a drawback. Usually marks/ clears a box.";
+                  descText += "Success with a drawback. Usually marks/clears a box.";
                   break;
 
                 case RollStatus.Failure:
@@ -258,33 +283,37 @@ export const wildDice = (
 
         }
 
-        if (doubles) {
+        if (doubles && !specialRoll) {
           switch (rollType) {
 
               case WildType.Attack:
-                descText += "\n\n**(Twist... or Critical)**\n Unexpected narrative effect/critical with increased impact."
+                descText += "\n\n**Twist... or Critical**\n Unexpected narrative effect/critical with increased impact."
                 break;
 
               case WildType.Defense:
-                descText += "\n\n**(Twist... or Counter)**\n Unexpected narrative effect, or counter with a mark of damage against them (if in range)."  
-                break;
-
-              // Watch and Weather-watching rolls don't have twists
-
-              case WildType.Watch:
-                break;
-
-              case WildType.Weather:
+                descText += "\n\n**Twist... or Counter**\n Unexpected narrative effect, or counter with a mark of damage against them (if in range)."  
                 break;
 
               default:
-                descText += "\n\n**(Twist)**\nAdds a small, potentially useful twist, suggested by any player. Firefly has final say."
+                descText += "\n\n**Twist**\nAdds a small, potentially useful twist, suggested by any player. Firefly has final say."
                 break;
           }
         }
 
+        if (cut > 0) {
+          descText += `\n\n**Cut**\nRemoved **${cut}** dice from the pool. (Cut results: *${cutDice}*).`;
+        }
+
         if (zeroD) {
-          descText += "\n\n**(Zero Dice)**\nYou had nothing in your dice pool! Treat triumphs as conflicts."
+          descText += "\n\n**Zero Dice**\nYou had nothing in your dice pool! Rolled a single d6, treating triumphs as conflicts."
+        }
+
+        if (overcut) {
+          descText += "\n\n**Overcut**\nYou cut your entire dice pool! Rolled a single d6 instead, treating triumphs as conflicts."
+        }
+
+        if (overcut && cut > 0 && zeroD) { // this is just for fun honestly
+          descText += "\n\n*What are you even doing that you had to cut on a roll of 0 dice?*"
         }
 
         return descText;
@@ -296,7 +325,7 @@ export const wildDice = (
     title,
     description,
     status,
-    dice: rolls.dice,
+    dice: overcut ? diceToCut : rolls.dice,
     };
 
   };
