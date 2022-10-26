@@ -105,210 +105,187 @@ export const wildDice = (
 
     const description =
        (() => {
+        let descText = "";
 
-          switch (rollType) {
-            // there is probably a way to avoid this deduplication for the twists text
-            case WildType.Action:
+        switch (rollType) {
 
-              return (() => {
-
-              switch (status) {
-
+          case WildType.Action:
+            switch (status) {
                 case RollStatus.Full:
-                  return `Complete success, no drawbacks. Mark/clear a box on a track.${
-                    doubles ? " \n\n**(Twist)**\n Adds a small, potentially useful twist, suggested by any player. Firefly has final say." : ""
-                  }`;
+                  descText += "Complete success, no drawbacks. Mark/clear a box on a track.";
+                  break;
 
                 case RollStatus.Mixed:
-                  return `Success with a drawback. Usually marks/ clears a box.${
-                    doubles ? " \n\n**(Twist)**\n Adds a small, potentially useful twist, suggested by any player. Firefly has final say." : ""
-                  }`;
+                  descText += "Success with a drawback. Usually marks/ clears a box.";
+                  break;
 
                 case RollStatus.Failure:
-                  return `Failure and narrative complication or drawback. Usually doesn't mark/clear a box.${
-                    doubles ? " \n\n**(Twist)**\n Adds a small, potentially useful twist, suggested by any player. Firefly has final say." : ""
-                  }`;
+                  descText += "Failure and narrative complication or drawback. Usually doesn't mark/clear a box."
+                  break;
+            }
+            break;
 
-                default:
-                  throw new UnreachableCaseError(status)}
-              })(); 
-              
-            case WildType.Attack:
-              return (() => {
-                switch (status) {
+          case WildType.Attack:
+            switch (status) {
+                case RollStatus.Full:
+                  descText += "Powerful blow. Deal damage and might inflict an effect.";
+                  break;
 
-                  case RollStatus.Full:
-                    return `Powerful blow. Deal damage and might inflict an effect.${
-                      doubles ? " \n\n**(Twist... or Critical)**\n Unexpected narrative effect/critical with increased impact." : ""
-                    }`;
+                case RollStatus.Mixed:
+                  descText += "Attack deals damage and maybe associated effect, but you might take some damage, suffer an effect, lose a resource or be put in a less favourable position.";
+                  break;
 
-                  case RollStatus.Mixed:
-                    return `Attack deals damage and maybe associated effect, but you might take some damage, suffer an effect, lose a resource or be put in a less favourable position.${
-                      doubles ? " \n\n**(Twist... or Critical)**\n Unexpected narrative effect/critical with increased impact." : ""
-                    }`;
+                case RollStatus.Failure:
+                  descText += "Attack misses or does no damage. You definitely take some damage or an effect, and might lose a resource or be put in a less favourable position too."
+                  break;
+            }
+            break;
+  
+          case WildType.Defense:
+            switch (status) {
+                case RollStatus.Full:
+                  descText += "Completely avoid the threat (though some powerful opponents may have aspects that make even a triumph dangerous).";
+                  break;
 
-                  case RollStatus.Failure:
-                    return `Attack misses or does no damage. You definitely take some damage or an effect, and might lose a resource or be put in a less favourable position too.${
-                      doubles ? " \n\n**(Twist... or Critical)**\n Unexpected narrative effect/critical with increased impact." : ""
-                    }`;
+                case RollStatus.Mixed:
+                  descText += "Avoid the worst but take damage, an effect, a negative change in position, or destruction (or temporary denial) of a resource.";
+                  break;
 
-                  default:
-                    throw new UnreachableCaseError(status)}
-                })();
+                case RollStatus.Failure:
+                  descText += "Take damage, and likely associated effect and loss of resource or position as well."
+                  break;
+            }
+            break;
 
-            case WildType.Defense:
-              return (() => {
-                switch (status) {
+          case WildType.Acquisition:
+            switch (status) {
+                case RollStatus.Full:
+                  descText += "Gain a solid untainted resource.";
+                  break;
 
-                  case RollStatus.Full:
-                    return `Completely avoid the threat (though some powerful opponents may have aspects that make even a triumph dangerous).${
-                      doubles ? " \n\n**(Twist... or Counter)**\n Unexpected narrative effect, or counter with a mark of damage against them (if in range)." : ""
-                    }`;
+                case RollStatus.Mixed:
+                  descText += "Gain a resource with a negative tag.";
+                  break;
 
-                  case RollStatus.Mixed:
-                    return `Avoid the worst but take damage, an effect, a negative change in position, or destruction (or temporary denial) of a resource.${
-                      doubles ? " \n\n**(Twist... or Counter)**\n Unexpected narrative effect, or counter with a mark of damage against them (if in range)." : ""
-                    }`;
+                case RollStatus.Failure:
+                  descText += "Resource not found or ruined during collection."
+                  break;
+            }
+            break;
 
-                  case RollStatus.Failure:
-                    return `Take damage, and likely associated effect and loss of resource or position as well.${
-                      doubles ? " \n\n**(Twist... or Counter)**\n Unexpected narrative effect, or counter with a mark of damage against them (if in range)." : ""
-                    }`;
+          case WildType.Creation:
+            switch (status) {
+                case RollStatus.Full:
+                  descText += "Recipient gains temporary benefit related to resources used.";
+                  break;
 
-                  default:
-                    throw new UnreachableCaseError(status)}
-                  })();
+                case RollStatus.Mixed:
+                  descText += "Recipient gains temporary 2-track aspect with downsides, or no downside, but it doesn't quite do what was intended.";
+                  break;
 
-            case WildType.Acquisition:
-              return (() => {
-                switch (status) {
+                case RollStatus.Failure:
+                  descText += "Creation might be a bizarre ornament/culinary curiosity, but gives no benefits."
+                  break;
+            }
+            break;
 
-                  case RollStatus.Full:
-                    return `Gain a solid untainted resource.${
-                      doubles ? " \n\n**(Twist)**\n Gain a resource with a unique or positive tag suggested by you or another player." : ""
-                    }`;
+          case WildType.Recovery:
+            switch (status) {
+                case RollStatus.Full:
+                  descText += "Heal two marks of damage to an aspect, ship rating, injury track or mire.";
+                  break;
 
-                  case RollStatus.Mixed:
-                    return `Gain a resource with a negative tag.${
-                      doubles ? " \n\n**(Twist)**\n Gain a resource with a unique or positive tag suggested by you or another player." : ""
-                    }`;
+                case RollStatus.Mixed:
+                  descText += "Heal one mark of damage to an aspect, ship rating, injury track or mire.";
+                  break;
 
-                  case RollStatus.Failure:
-                    return `Resource not found or ruined during collection.${
-                      doubles ? " \n\n**(Twist)**\n Gain a resource with a unique or positive tag suggested by you or another player." : ""
-                    }`;
+                case RollStatus.Failure:
+                  descText += "Add an extra mark of damage to an aspect, ship rating, injury track or mire."
+                  break;
+            }
+            break;
 
-                  default:
-                    throw new UnreachableCaseError(status)}
-                  })();
+          case WildType.Ratings:
+            switch (status) {
+                case RollStatus.Full:
+                  descText += "Bypass the obstacle safely.";
+                  break;
 
-            case WildType.Creation:
-              return (() => {
-                switch (status) {
+                case RollStatus.Mixed:
+                  descText += "Bypass the obstacle but mark 1 Rating damage.";
+                  break;
 
-                  case RollStatus.Full:
-                    return `Recipient gains temporary benefit related to resources used.${
-                      doubles ? " \n\n**(Twist)**\n Creation has small, unexpected benefit in addition to the usual result." : ""
-                    }`;
+                case RollStatus.Failure:
+                  descText += "Fail to bypass the obstacle and mark 1 Rating damage."
+                  break;
+            }
+            break;
 
-                  case RollStatus.Mixed:
-                    return `Recipient gains temporary 2-track aspect with downsides, or no downside, but it doesn't quite do what was intended.${
-                      doubles ? " \n\n**(Twist)**\n Creation has small, unexpected benefit in addition to the usual result." : ""
-                    }`;
+          case WildType.Watch:
+            switch (status) {
+                case RollStatus.Full:
+                  descText += "Montage, Meeting, Tall Tale (gain a Whisper), Tree Shanty, Undercrew Issue, Reflection (heal Mire)";
+                  break;
 
-                  case RollStatus.Failure:
-                    return `Creation might be a bizarre ornament/culinary curiosity, but gives no benefits.${
-                      doubles ? " \n\n**(Twist)**\n Creation has small, unexpected benefit in addition to the usual result." : ""
-                    }`;
+                case RollStatus.Mixed:
+                  descText += "Nearby Ship, Outpost, Survivor Needing Rescue, Wreck or Ruin, Cache of Cargo/Supplies, Conspiracy";
+                  break;
 
-                  default:
-                    throw new UnreachableCaseError(status)}
-                  })();
-
-            case WildType.Recovery:
-              return (() => {
-                switch (status) {
-
-                  case RollStatus.Full:
-                    return `Heal two marks of damage to an aspect, ship rating, injury track or mire.${
-                      doubles ? " \n\n**(Twist)**\n You don't consume the resource used to carry out your recovery." : ""
-                    }`;
-
-                  case RollStatus.Mixed:
-                    return `Heal one mark of damage to an aspect, ship rating, injury track or mire.${
-                      doubles ? " \n\n**(Twist)**\n You don't consume the resource used to carry out your recovery." : ""
-                    }`;
-
-                  case RollStatus.Failure:
-                    return `Add an extra mark of damage to an aspect, ship rating, injury track or mire.${
-                      doubles ? " \n\n**(Twist)**\n You don't consume the resource used to carry out your recovery." : ""
-                    }`;
-
-                  default:
-                    throw new UnreachableCaseError(status)}
-                  })();
-
-            case WildType.Ratings:
-              return (() => {
-                switch (status) {
-
-                  case RollStatus.Full:
-                    return `Bypass the obstacle safely.${
-                      doubles ? " \n\n**(Twist)**\n An unexpected event in addition to the result." : ""
-                    }`;
-
-                  case RollStatus.Mixed:
-                    return `Bypass the obstacle but mark 1 Rating damage.${
-                      doubles ? " \n\n**(Twist)**\n An unexpected event in addition to the result." : ""
-                    }`;
-
-                  case RollStatus.Failure:
-                    return `Fail to bypass the obstacle and mark 1 Rating damage.${
-                      doubles ? " \n\n**(Twist)**\n An unexpected event in addition to the result." : ""
-                    }`;
-
-                  default:
-                    throw new UnreachableCaseError(status)}
-                  })();
-
-                // Watch and Weather-Watching don't have twist results
-
-            case WildType.Watch:
-              return (() => {
-                switch (status) {
-
-                  case RollStatus.Full:
-                    return `Montage, Meeting, Tall Tale (gain a Whisper), Tree Shanty, Undercrew Issue, Reflection (heal Mire)`;
-             
-                  case RollStatus.Mixed:
-                    return `Nearby Ship, Outpost, Survivor Needing Rescue, Wreck or Ruin, Cache of Cargo/Supplies, Conspiracy`;
-            
-                  case RollStatus.Failure:
-                    return `Weather, Natural Feature, Wonder (heal Mire), Horror, Unsettled Landfall, True Wilds`;
-            
-                  default:
-                    throw new UnreachableCaseError(status)}
-                  })();
+                case RollStatus.Failure:
+                  descText += "Weather, Natural Feature, Wonder (heal Mire), Horror, Unsettled Landfall, True Wilds"
+                  break;
+            }
+            break;
 
             case WildType.Weather:
-              return (() => {
-                switch (status) {
-
+              switch (status) {
                   case RollStatus.Full:
-                    return `Weather clears.`;
-                  
+                    descText += "Weather clears.";
+                    break;
+  
                   case RollStatus.Mixed:
-                    return `Weather continues as it is.`;
-                  
+                    descText += "Weather continues as it is.";
+                    break;
+  
                   case RollStatus.Failure:
-                    return `Driving rain/hail (lowers visibility), blazing sunshine (potential heatstroke), living storm or bizarre weather phenomenon.`;
-                  
-                    default:
-                    throw new UnreachableCaseError(status)}
-                  })();
+                    descText += "Driving rain/hail (lowers visibility), blazing sunshine (potential heatstroke), living storm or bizarre weather phenomenon."
+                    break;
+              }
+              break;
 
-            default:
-              throw new UnreachableCaseError(rollType)}
+          default:
+            break;
+
+        }
+
+        if (doubles) {
+          switch (rollType) {
+
+              case WildType.Attack:
+                descText += "\n\n**(Twist... or Critical)**\n Unexpected narrative effect/critical with increased impact."
+
+              case WildType.Defense:
+                descText += "\n\n**(Twist... or Counter)**\n Unexpected narrative effect, or counter with a mark of damage against them (if in range)."  
+              break;
+              // Watch and Weather-watching rolls don't have twists
+              case WildType.Watch:
+                break;
+
+              case WildType.Weather:
+                break;
+
+              default:
+                descText += "\n\n**(Twist)**\nAdds a small, potentially useful twist, suggested by any player. Firefly has final say."
+                break;
+          }
+        }
+
+        if (zeroD) {
+          descText += "\n\n**(Zero Dice)**\nYou had nothing in your dice pool! Treat triumphs as conflicts."
+        }
+
+        return descText;
+
         })();     
 
 
