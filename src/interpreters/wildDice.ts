@@ -287,11 +287,27 @@ export const wildDice = (
           switch (rollType) {
 
               case WildType.Attack:
-                descText += "\n\n**Twist... or Critical**\n Unexpected narrative effect/critical with increased impact."
+                descText += "\n\n**Twist... or Critical**\nUnexpected narrative effect/critical with increased impact.";
                 break;
 
               case WildType.Defense:
-                descText += "\n\n**Twist... or Counter**\n Unexpected narrative effect, or counter with a mark of damage against them (if in range)."  
+                descText += "\n\n**Twist... or Counter**\nUnexpected narrative effect, or counter with a mark of damage against them (if in range).";  
+                break;
+
+              case WildType.Acquisition:
+                descText += "\n\n**Twist**\nGain a resource with a unique or positive tag suggested by you or another player.";
+                break;
+
+              case WildType.Creation:
+                descText += "\n\n**Twist**\nCreation has small, unexpected benefit in addition to the usual result."
+                break;
+
+              case WildType.Recovery:
+                descText += "\n\n**Twist**\nYou don't consume the resource used to carry out your recovery.";
+                break;
+
+              case WildType.Ratings:
+                descText += "\n\n**Twist**\nAn unexpected event in addition to the result.";
                 break;
 
               default:
