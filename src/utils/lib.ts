@@ -12,6 +12,18 @@ export enum ForgedType {
   Clear = "clear",
 }
 
+export enum WildType {
+  Action = "Action",
+  Attack = "Attack",
+  Defense = "Defense",
+  Acquisition = "Acquisition",
+  Creation = "Creation",
+  Recovery = "Recovery",
+  Ratings = "Ratings",
+  Watch = "Watch",
+  Weather = "Weather-watching",
+}
+
 export interface RollResponse {
   title: string;
   description: string;
@@ -43,3 +55,7 @@ export const rollDice = (count: number, sides: number): Rolls => {
     dice,
   };
 };
+
+export function compareNumbers(a: number, b: number) {
+  return a - b;
+}

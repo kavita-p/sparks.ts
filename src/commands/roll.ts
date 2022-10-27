@@ -6,7 +6,7 @@ import {
   ColorResolvable,
 } from "discord.js";
 //various dice-based roll utilities
-import { rollDice, RollResponse, ForgedType, RollStatus } from "../utils/lib";
+import { rollDice, RollResponse, ForgedType, WildType, RollStatus } from "../utils/lib";
 import * as interpreters from "../interpreters/interpreter";
 //commands
 import * as inputs from "../utils/rollCommandBuilders";
@@ -17,7 +17,8 @@ export const data = new SlashCommandBuilder()
   .addSubcommandGroup(inputs.sbrCommand)
   .addSubcommand(inputs.forgedCommand)
   .addSubcommand(inputs.customRollCommand)
-  .addSubcommand(inputs.pbtaCommand);
+  .addSubcommand(inputs.pbtaCommand)
+  .addSubcommand(inputs.wildCommand);
 
 export const execute = async (interaction: Interaction) => {
   if (!interaction.isRepliable || !interaction.isChatInputCommand()) return;
@@ -88,6 +89,21 @@ export const execute = async (interaction: Interaction) => {
       const rolls = rollDice(2, 6);
       response = interpreters.pbtaMove(rolls, stat);
       break;
+    }
+    case "wild": {
+      const pool = interaction.options.getInteger("pool");
+      const rollType = interaction.options.getString("type") as WildType;
+      const cut = interaction.options.getInteger("cut") as number;
+      if (
+        rollType === null ||
+        rollType === undefined ||
+        pool === null ||
+        pool === undefined
+      )
+        return;
+        const rolls = pool === 0 ? rollDice(1,6) : rollDice(pool,6);
+        response = interpreters.wildDice(rolls, rollType, pool === 0,cut);
+        break;
     }
   }
 
