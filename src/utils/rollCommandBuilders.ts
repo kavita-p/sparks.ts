@@ -83,42 +83,43 @@ export const pbtaCommand = (subcommand: SlashCommandSubcommandBuilder) =>
         .setRequired(true)
     );
 
-    export const wildCommand = (subcommand: SlashCommandSubcommandBuilder) =>
-    subcommand    
-        .setName("wild")
-        .setDescription("Rolls a Wild Words roll.")
-        .addStringOption((option) =>
-        option
-            .setName("type")
-            .setDescription("The type of roll you'd like to make.")
-            .setRequired(true)
-            .addChoices(
-                { name: "Action", value: "Action"},
-                { name: "Attack", value: "Attack"},
-                { name: "Defense", value: "Defense"},
-                { name: "Acquisition", value: "Acquisition"},
-                { name: "Creation", value: "Creation"},
-                { name: "Recovery", value: "Recovery"},
-                { name: "Ratings", value: "Ratings"},
-                { name: "Watch", value: "Watch"},
-                { name: "Weather-watching", value: "Weather-watching"}
-            )
-          )
-          .addIntegerOption((option) =>
-          option
-            .setName("pool")
-            .setDescription("The size of your dice pool.")
-            .setRequired(true)
-            .setMinValue(0)
-            .setMaxValue(6)
-          )
-  
-          .addIntegerOption((option) =>
-          option
-            .setName("cut")
-            .setDescription("The number of results to remove from the result pool, starting from the highest.")
-            .setRequired(false)
-            .setMinValue(0)
-            .setMaxValue(6)
-        ); 
-      
+export const wildCommand = (subcommand: SlashCommandSubcommandBuilder) =>
+  subcommand
+    .setName("wild")
+    .setDescription("Rolls a Wild Words roll.")
+    .addStringOption((option) =>
+      option
+        .setName("type")
+        .setDescription("The type of roll you'd like to make.")
+        .setRequired(true)
+        .addChoices(
+          { name: "Action", value: "Action" },
+          { name: "Attack", value: "Attack" },
+          { name: "Defense", value: "Defense" },
+          { name: "Acquisition", value: "Acquisition" },
+          { name: "Creation", value: "Creation" },
+          { name: "Recovery", value: "Recovery" },
+          { name: "Ratings", value: "Ratings" },
+          { name: "Watch", value: "Watch" },
+          { name: "Weather-watching", value: "Weather-watching" }
+        )
+    )
+    .addIntegerOption((option) =>
+      option
+        .setName("pool")
+        .setDescription("The size of your dice pool.")
+        .setRequired(true)
+        .setMinValue(0)
+        .setMaxValue(6)
+    )
+
+    .addIntegerOption((option) =>
+      option
+        .setName("cut")
+        .setDescription(
+          "The number of results to remove from the result pool, starting from the highest."
+        )
+        .setRequired(false)
+        .setMinValue(0)
+        .setMaxValue(6)
+    );

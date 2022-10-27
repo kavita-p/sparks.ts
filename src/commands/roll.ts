@@ -6,7 +6,13 @@ import {
   ColorResolvable,
 } from "discord.js";
 //various dice-based roll utilities
-import { rollDice, RollResponse, ForgedType, WildType, RollStatus } from "../utils/lib";
+import {
+  rollDice,
+  RollResponse,
+  ForgedType,
+  WildType,
+  RollStatus,
+} from "../utils/lib";
 import * as interpreters from "../interpreters/interpreter";
 //commands
 import * as inputs from "../utils/rollCommandBuilders";
@@ -101,9 +107,9 @@ export const execute = async (interaction: Interaction) => {
         pool === undefined
       )
         return;
-        const rolls = pool === 0 ? rollDice(1,6) : rollDice(pool,6);
-        response = interpreters.wildDice(rolls, rollType, pool === 0,cut);
-        break;
+      const rolls = pool === 0 ? rollDice(1, 6) : rollDice(pool, 6);
+      response = interpreters.wildDice(rolls, rollType, pool === 0, cut);
+      break;
     }
   }
 
