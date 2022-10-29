@@ -59,12 +59,12 @@ export const wildDice = (
         ? RollStatus.Mixed
         : RollStatus.Failure
       : (() => {
-        return score > 5
-          ? RollStatus.Full
-          : score > 3
+          return score > 5
+            ? RollStatus.Full
+            : score > 3
             ? RollStatus.Mixed
             : RollStatus.Failure;
-      })();
+        })();
 
   const title = (() => {
     let titleText = `__${rollType}__ [${score}] `;
