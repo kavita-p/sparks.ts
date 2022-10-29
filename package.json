@@ -15,7 +15,7 @@
     "debug": "nodemon src/index.ts",
     "deploy:commands": "node build/deploy-commands.js",
     "format": "prettier --write . --no-config",
-    "devPreInstall": "husky install",
+    "prepare": "husky install",
     "build": "tsc"
   },
   "devDependencies": {
